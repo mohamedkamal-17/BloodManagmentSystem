@@ -10,5 +10,8 @@
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
+        public ICollection<Notification> Notification { get; set; } = new HashSet<Notification>();
+        public ICollection<BloodRequest> BloodRequests { get; set; } = new HashSet<BloodRequest>();
+
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace BloodManagment.domain.Entities
+﻿using BloodManagment.domain.Common;
+
+namespace BloodManagment.domain.Entities
 {
-    public class Notification
+    public class Notification : BaseEntity
     {
-        public int Id { get; set; }
+
 
         // Notification Content
         public string Title { get; set; }
@@ -10,18 +12,18 @@
 
 
         // Receiver (User who will see the notification)
-        public string? RescipientId { get; set; }
-        public Rescipient? User { get; set; }
+        public int? RescipientId { get; set; }
+        public Rescipient? Rescipient { get; set; }
 
-        public string? DonarId { get; set; }
+        public int? DonarId { get; set; }
         public Donar? Donar { get; set; }
 
-        public string ThalassemiaPatientId { get; set; }
+        public int ThalassemiaPatientId { get; set; }
         public ThalassemiaPatient? ThalassemiaPatient { get; set; }
 
         // Optional: Link to request
-        public int? RequestId { get; set; }
-        public RecipientBloodRequest Request { get; set; }
+        public int? BloodRequestId { get; set; }
+        public BloodRequest BloodRequest { get; set; }
 
         public int? DonationRequestId { get; set; }
         public DonationRequest? DonationRequest { get; set; }
@@ -33,6 +35,8 @@
 
         // Time
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public int? HospitalId { get; set; }
+        public Hospital Hospital { get; set; }
     }
 
 }

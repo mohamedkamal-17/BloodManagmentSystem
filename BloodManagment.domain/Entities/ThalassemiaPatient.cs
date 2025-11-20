@@ -1,7 +1,10 @@
-﻿namespace BloodManagment.domain.Entities
+﻿using BloodManagment.domain.Common;
+
+namespace BloodManagment.domain.Entities
 {
-    public class ThalassemiaPatient
+    public class ThalassemiaPatient : BaseEntity
     {
+
         public DateTime DiagnosisDate { get; set; }
         public DateTime LastTransfusionDate { get; set; }
         public DateTime NextTransfusionDate { get; set; }

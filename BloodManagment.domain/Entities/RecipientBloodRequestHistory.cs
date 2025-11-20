@@ -2,7 +2,7 @@
 
 namespace BloodManagment.domain.Entities
 {
-    public class RecipientBloodRequest : BaseEntity
+    public class RecipientBloodRequestHistory : BaseEntity
     {
 
 

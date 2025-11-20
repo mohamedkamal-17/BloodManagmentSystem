@@ -15,6 +15,7 @@ namespace BloodManagment.domain.Entities
         public HealthCondition HealthCondition { get; set; }
         public int DonarId { get; set; }
         public Donar Donar { get; set; }
+        public ICollection<Notification> Notifications { get; set; } = new HashSet<Notification>();
 
 
     }

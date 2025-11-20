@@ -11,14 +11,17 @@ namespace BloodManagment.domain.Entities
         public int HospitalId { get; set; }
         public Hospital Hospital { get; set; }
         public string Reason { get; set; }
-        public string? RescipientId { get; set; }
+        public int? RescipientId { get; set; }
         public Rescipient? Rescipient { get; set; }
 
-        public string? LabTechnicianId { get; set; }
+        public int? LabTechnicianId { get; set; }
         public LabTechnician? LabTechnician { get; set; }
         public BloodGroup BloodGroup { get; set; }
 
         public RequestStatus Status { get; set; } = RequestStatus.Pending;
+
+        public ICollection<Notification> Notifications { get; set; } = new HashSet<Notification>();
+
 
 
     }

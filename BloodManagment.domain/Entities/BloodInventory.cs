@@ -15,5 +15,7 @@ namespace BloodManagment.domain.Entities
         public int HospitalId { get; set; }
         public Hospital Hospital { get; set; }
 
+        public ICollection<BloodUnit> BloodUnits { get; set; } = new HashSet<BloodUnit>();
+
     }
 }

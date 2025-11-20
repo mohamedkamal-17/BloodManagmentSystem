@@ -14,5 +14,7 @@ namespace BloodManagment.domain.Entities
         public BloodUnitStatus Status { get; set; } = BloodUnitStatus.Available;
 
         public string StorageLocation { get; set; }
+        public int BloodInventoryId { get; set; }
+        public BloodInventory BloodInventory { get; set; }
     }
 }
