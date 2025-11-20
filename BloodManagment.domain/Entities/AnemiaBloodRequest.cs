@@ -1,8 +1,11 @@
-﻿namespace BloodManagment.domain.Entities
+﻿using BloodManagment.domain.Common;
+
+namespace BloodManagment.domain.Entities
 {
 
-    public class AnemiaBloodRequest
+    public class AnemiaBloodRequest : BaseEntity
     {
+
         public string RequestCode { get; set; }
         public DateTime RequestDate { get; set; }
 
@@ -18,7 +21,7 @@
         public string BloodTestIssuer { get; set; }              // جهة إصدار صورة الدم
 
 
-        public string PatientId { get; set; }
+        public int PatientId { get; set; }
         public ThalassemiaPatient Patient { get; set; }
     }
 
