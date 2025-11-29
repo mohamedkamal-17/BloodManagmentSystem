@@ -1,0 +1,34 @@
+﻿using BloodManagment.domain.Contracts.Reposetorise;
+using BloodManagment.Infrastructure.DataHelper;
+using Microsoft.EntityFrameworkCore;
+
+namespace BloodManagment.Infrastructure.Repositoris
+{
+    internal class GenirecRepo<T> : IGenirecRepo<T> where T : class
+    {
+        protected readonly ApplicationContext _applicationContext;
+        protected readonly DbSet<T> _dbset;
+        public GenirecRepo(ApplicationContext context)
+        {
+            _applicationContext = context;
+            _dbset = _applicationContext.Set<T>();
+
+
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await _dbset.AddAsync(entity);
+        }
+
+        public void DeleteAsync(T entity)
+        {
+            _dbset.Remove(entity);
+        }
+
+        public void UpdateAsync(T entity)
+        {
+            _dbset.Update(entity);
+        }
+    }
+}
