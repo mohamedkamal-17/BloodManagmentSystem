@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Comman\" />
-    <Folder Include="Repositoris\" />
+    <Folder Include="Repositorise\" />
   </ItemGroup>
 
   <ItemGroup>

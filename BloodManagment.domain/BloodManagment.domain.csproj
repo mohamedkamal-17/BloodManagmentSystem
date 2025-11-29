@@ -13,8 +13,4 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.22" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
-
 </Project>
