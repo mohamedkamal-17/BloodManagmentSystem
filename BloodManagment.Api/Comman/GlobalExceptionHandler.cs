@@ -51,7 +51,7 @@ namespace BloodManagment.Api.Comman
                     Detail = dbEx.Message
                 },
 
-                NotFoundCustemException notFoundEx => new ProblemDetails
+                NotFoundException notFoundEx => new ProblemDetails
                 {
                     Title = "Not Found",
                     Status = (int)HttpStatusCode.NotFound,
