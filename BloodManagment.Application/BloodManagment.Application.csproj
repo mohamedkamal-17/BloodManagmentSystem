@@ -7,7 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="features\BloodRequest\**" />
+    <EmbeddedResource Remove="features\BloodRequest\**" />
+    <None Remove="features\BloodRequest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BloodManagment.domain\BloodManagment.domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
   </ItemGroup>
 
 </Project>

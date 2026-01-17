@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
 
+        public string FullName { get; set; }
         public string DonarCode { get; set; }
         public DateTime NextDonationDate { get; set; }
 

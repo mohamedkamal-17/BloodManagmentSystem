@@ -34,7 +34,7 @@ namespace BloodManagment.domain.Entities
         public bool IsRead { get; set; } = false;
 
         // Time
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
         public int? HospitalId { get; set; }
         public Hospital Hospital { get; set; }
     }
