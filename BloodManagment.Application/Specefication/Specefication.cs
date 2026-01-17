@@ -4,7 +4,7 @@ namespace BloodManagment.Application.Specefication
 {
     public abstract class Specefication<TEntity> where TEntity : class
     {
-        public Specefication(Expression<Func<TEntity, bool>> criatria)
+        public Specefication(Expression<Func<TEntity, bool>>? criatria)
         {
             this.Criatria = criatria;
 

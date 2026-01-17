@@ -1,10 +1,11 @@
-﻿using BloodManagment.domain.Contracts.Reposetorise;
+﻿using BloodManagment.Application.Specefication;
+using BloodManagment.domain.Contracts.Reposetorise;
 using BloodManagment.Infrastructure.DataHelper;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloodManagment.Infrastructure.Repositoris
 {
-    internal class GenirecRepo<T> : IGenirecRepo<T> where T : class
+    public class GenirecRepo<T> : IGenirecRepo<T> where T : class
     {
         protected readonly ApplicationContext _applicationContext;
         protected readonly DbSet<T> _dbset;
@@ -30,5 +31,12 @@ namespace BloodManagment.Infrastructure.Repositoris
         {
             _dbset.Update(entity);
         }
+
+        protected IQueryable<T> ApplaySpacedication(Specefication<T> specefication)
+        {
+            return SpeceficationEvaluater.SpeceficationEvaluater.GetQuery(_dbset, specefication);
+        }
+
+
     }
 }
