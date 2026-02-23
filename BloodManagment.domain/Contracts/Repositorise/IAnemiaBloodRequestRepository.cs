@@ -3,7 +3,7 @@ using BloodManagment.domain.Entities;
 
 namespace BloodManagment.domain.Contracts.Repositorise
 {
-    public interface IAnemiaBloodRequestRepository : IGenirecRepo<AnemiaBloodRequest>
+    public interface IAnemiaBloodRequestRepository : IGenericRepository<AnemiaBloodRequest>
     {
         Task<IList<AnemiaBloodRequest>> GetAllAsync();
         Task<IList<AnemiaBloodRequest>> GetByBloodGroupAsync(BloodGroup bloodGroup);

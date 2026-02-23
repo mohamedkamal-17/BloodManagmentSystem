@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BloodManagment.Infrastructure.Repositorise
 {
-    public class AnemiaBloodRequestRepository : GenirecRepo<AnemiaBloodRequest>, IAnemiaBloodRequestRepository
+    public class AnemiaBloodRequestRepository : GenericRepository<AnemiaBloodRequest>, IAnemiaBloodRequestRepository
     {
         private readonly ApplicationContext context;
         DbSet<AnemiaBloodRequest> _dbSet;

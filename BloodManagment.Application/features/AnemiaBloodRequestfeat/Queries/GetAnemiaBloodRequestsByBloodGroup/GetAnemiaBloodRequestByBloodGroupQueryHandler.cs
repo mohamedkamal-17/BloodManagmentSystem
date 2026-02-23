@@ -7,10 +7,10 @@ namespace BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.Get
 {
     public class GetAnemiaBloodRequestByBloodGroupQueryHandler : IRequestHandler<GetAnemiaBloodRequestByBloodGroupQuery, ReadOnlyCollection<GetAnemiaBloodRequestByBloodGroupDto>>
     {
-        private readonly IUnitOfWorke unitOfWorke;
+        private readonly IUnitOfWork unitOfWorke;
         private readonly Mapper mapper;
 
-        public GetAnemiaBloodRequestByBloodGroupQueryHandler(IUnitOfWorke unitOfWorke, Mapper mapper)
+        public GetAnemiaBloodRequestByBloodGroupQueryHandler(IUnitOfWork unitOfWorke, Mapper mapper)
         {
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;

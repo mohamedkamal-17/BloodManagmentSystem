@@ -7,10 +7,10 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GettAl
 {
     public class GetAllDonationRequestQueryHandler : IRequestHandler<GetAllDonationRequestQuery, ReadOnlyCollection<GetAllDonationRequestDto>>
     {
-        private readonly IUnitOfWorke unitOfWorke;
+        private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
 
-        public GetAllDonationRequestQueryHandler(IUnitOfWorke unitOfWorke, IMapper mapper)
+        public GetAllDonationRequestQueryHandler(IUnitOfWork unitOfWorke, IMapper mapper)
         {
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;

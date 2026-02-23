@@ -8,7 +8,7 @@ namespace BloodManagment.domain.Entities
         public DateTime DiagnosisDate { get; set; }
         public DateTime LastTransfusionDate { get; set; }
         public DateTime NextTransfusionDate { get; set; }
-
+        public BloodGroup BloodGroup { get; set; }
         public int HospitalId { get; set; }
         public Hospital Hospital { get; set; }
 

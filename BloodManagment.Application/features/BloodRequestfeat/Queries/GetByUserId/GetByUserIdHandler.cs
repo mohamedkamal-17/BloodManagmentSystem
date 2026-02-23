@@ -7,10 +7,10 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetByUser
 {
     public class GetByUserIdHandler : IRequestHandler<GetByUserIdQuery, ReadOnlyCollection<GetByUserIdDTO>>
     {
-        private readonly IUnitOfWorke unitOfWorke;
+        private readonly IUnitOfWork unitOfWorke;
         private readonly Mapper mapper;
 
-        public GetByUserIdHandler(IUnitOfWorke unitOfWorke, Mapper mapper)
+        public GetByUserIdHandler(IUnitOfWork unitOfWorke, Mapper mapper)
         {
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;

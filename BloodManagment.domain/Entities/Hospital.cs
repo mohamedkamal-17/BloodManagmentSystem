@@ -4,7 +4,7 @@ namespace BloodManagment.domain.Entities
 {
     public class Hospital : BaseEntity
     {
-        public string HospitalName { get; set; }
+        public string Name { get; set; }
         public string Address { get; set; }
         public string ContactNumber { get; set; }
 

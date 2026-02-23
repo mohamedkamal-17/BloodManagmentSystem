@@ -8,7 +8,7 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
     {
         public void Configure(EntityTypeBuilder<Hospital> builder)
         {
-            builder.Property(x => x.HospitalName).HasMaxLength(200).IsRequired();
+            builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Address).HasMaxLength(500);
             builder.Property(x => x.ContactNumber).HasMaxLength(50);
 

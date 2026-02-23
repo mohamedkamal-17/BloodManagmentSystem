@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BloodManagment.Infrastructure.Repositorise
 {
-    public class BloodInventoryRepository : GenirecRepo<BloodInventory>, IBloodInventoryRepository
+    public class BloodInventoryRepository : GenericRepository<BloodInventory>, IBloodInventoryRepository
     {
         DbSet<BloodInventory> _dbSet;
         public BloodInventoryRepository(ApplicationContext context) : base(context)

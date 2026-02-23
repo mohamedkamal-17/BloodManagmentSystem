@@ -3,7 +3,7 @@ using BloodManagment.domain.Entities;
 
 namespace BloodManagment.domain.Contracts.Repositorise
 {
-    public interface IBloodRequestRepository : IGenirecRepo<BloodRequest>
+    public interface IBloodRequestRepository : IGenericRepository<BloodRequest>
     {
         Task<IList<BloodRequest>> GetAllAsync();
 

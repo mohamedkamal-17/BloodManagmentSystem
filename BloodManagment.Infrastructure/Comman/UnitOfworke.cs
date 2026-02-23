@@ -5,14 +5,22 @@ using BloodManagment.Infrastructure.Repositorise;
 
 namespace BloodManagment.Infrastructure.Comman
 {
-    public class UnitOfworke : IUnitOfWorke
+    public class UnitOfworke : IUnitOfWork
 
     {
         private ApplicationContext context;
-        private IBloodRequestRepository? _bloodRequestRepository;
-        private IAnemiaBloodRequestRepository? _anemiaBloodRequestRepository;
-        private IDonationRequestRepository? _donationRequestRepository;
-        private IBloodInventoryRepository? _bloodInventoryRepository;
+        private IBloodRequestRepository? bloodRequestRepository;
+        private IAnemiaBloodRequestRepository? anemiaBloodRequestRepository;
+        private IDonationRequestRepository? donationRequestRepository;
+        private IBloodInventoryRepository? bloodInventoryRepository;
+        private IPasswordResetOtpRepository? passwordResetOtpRepository;
+        private IDonarRepository? donarRepository;
+
+        private IHealthConditionRepository healthConditionRepository;
+
+        private IHospitalRepository hospitalRepository;
+
+        private ThalassemiaPatientRepository thalassemiaPatientRepository;
 
 
         public UnitOfworke(ApplicationContext context)
@@ -21,16 +29,30 @@ namespace BloodManagment.Infrastructure.Comman
         }
 
         public IBloodRequestRepository BloodRequestRepository =>
-            _bloodRequestRepository ??= new BloodRequestRepository(context);
+            bloodRequestRepository ??= new BloodRequestRepository(context);
 
         public IAnemiaBloodRequestRepository AnemiaBloodRequestRepository =>
-             _anemiaBloodRequestRepository ??= new AnemiaBloodRequestRepository(context);
+             anemiaBloodRequestRepository ??= new AnemiaBloodRequestRepository(context);
 
         public IBloodInventoryRepository BloodInventoryRepository =>
-            _bloodInventoryRepository ??= new BloodInventoryRepository(context);
+            bloodInventoryRepository ??= new BloodInventoryRepository(context);
 
         public IDonationRequestRepository DonationRequestRepository =>
-            _donationRequestRepository ??= new DonationRequestRepository(context);
+            donationRequestRepository ??= new DonationRequestRepository(context);
+
+        public IPasswordResetOtpRepository PasswordResetOtpRepository =>
+            passwordResetOtpRepository ??= new PasswordResetOtpRepository(context);
+
+        public IDonarRepository DonarRepository =>
+            donarRepository ??= new DonarRepository(context);
+        public IHealthConditionRepository HealthConditionRepository =>
+            healthConditionRepository ??= new HealthConditionRepository(context);
+
+        public IHospitalRepository HospitalRepository =>
+            hospitalRepository ??= new HospitalRepository(context);
+
+        public IThalassemiaPatientRepository ThalassemiaPatientRepository =>
+            thalassemiaPatientRepository ??= new ThalassemiaPatientRepository(context);
 
         public void Dispose()
         {

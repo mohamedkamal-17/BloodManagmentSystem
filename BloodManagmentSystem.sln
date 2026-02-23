@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{AF5E04B4-3BD0-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodManagment.Api", "BloodManagment.Api\BloodManagment.Api.csproj", "{4FB4D519-9A84-4357-AD90-B87B8057964C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodManagment.Mvc", "BloodManagment.Mvc\BloodManagment.Mvc.csproj", "{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{4FB4D519-9A84-4357-AD90-B87B8057964C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FB4D519-9A84-4357-AD90-B87B8057964C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FB4D519-9A84-4357-AD90-B87B8057964C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{0CDB9FE5-D837-4302-B1C5-52D9D5BF8A4A} = {4C85E93D-45A9-4235-BA5F-B69FB0C0DE64}
 		{AF5E04B4-3BD0-46A6-820E-0F57355484E0} = {E190420F-E410-4BFF-8F21-B7BD5EFD35C5}
 		{4FB4D519-9A84-4357-AD90-B87B8057964C} = {AF5E04B4-3BD0-46A6-820E-0F57355484E0}
+		{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD} = {AF5E04B4-3BD0-46A6-820E-0F57355484E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16D55DF5-F05D-43BE-AEF6-696C5C7650F8}

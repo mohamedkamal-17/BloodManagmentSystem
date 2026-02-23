@@ -7,10 +7,10 @@ namespace BloodManagment.Application.features.BloodInventoryfeat.Queries.GetAllI
 {
     internal class GettAllInentoriesQueryHandler : IRequestHandler<GettAllInentoriesQuery, ReadOnlyCollection<GettAllInentoriesDto>>
     {
-        private readonly IUnitOfWorke unitOfWorke;
+        private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
 
-        public GettAllInentoriesQueryHandler(IUnitOfWorke unitOfWorke, IMapper mapper)
+        public GettAllInentoriesQueryHandler(IUnitOfWork unitOfWorke, IMapper mapper)
         {
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;

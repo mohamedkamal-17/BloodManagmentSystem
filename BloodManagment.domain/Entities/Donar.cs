@@ -6,9 +6,13 @@
 
         public string FullName { get; set; }
         public string DonarCode { get; set; }
-        public DateTime NextDonationDate { get; set; }
+        public DateTime? NextDonationDate { get; set; }
 
-        public DateTime LastDonationDate { get; set; }
+        public BloodGroup BloodGroup { get; set; }
+
+        public Gender Gender { get; set; }
+
+        public DateTime? LastDonationDate { get; set; }
 
         public short DonationCount { get; set; } = default;
 

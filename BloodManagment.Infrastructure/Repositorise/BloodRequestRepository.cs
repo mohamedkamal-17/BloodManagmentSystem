@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BloodManagment.Infrastructure.Repositorise
 {
-    public class BloodRequestRepository : GenirecRepo<BloodRequest>, IBloodRequestRepository
+    public class BloodRequestRepository : GenericRepository<BloodRequest>, IBloodRequestRepository
     {
         DbSet<BloodRequest> _dbSet;
         public BloodRequestRepository(ApplicationContext context) : base(context)

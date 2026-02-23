@@ -8,10 +8,11 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetAllBol
 {
     public class GetAllBloodRequestsQueryHandler : IRequestHandler<GetAllBloodRequestsQuery, ReadOnlyCollection<GetAllBloodRequestsDto>>
     {
-        private readonly IUnitOfWorke unitOfWorke;
+        private readonly IUnitOfWork unitOfWorke;
         private readonly Mapper mapper;
 
-        public GetAllBloodRequestsQueryHandler(IUnitOfWorke unitOfWorke, Mapper mapper)
+
+        public GetAllBloodRequestsQueryHandler(IUnitOfWork unitOfWorke, Mapper mapper)
         {
 
             this.unitOfWorke = unitOfWorke;

@@ -7,10 +7,10 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloo
 {
     public class GetByBloodGroupQueryHandelr : IRequestHandler<GetByBloodGroupQuery, ReadOnlyCollection<GetByBloodGroupDTO>>
     {
-        private readonly IUnitOfWorke unitOfWorke;
+        private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
 
-        public GetByBloodGroupQueryHandelr(IUnitOfWorke unitOfWorke, IMapper mapper)
+        public GetByBloodGroupQueryHandelr(IUnitOfWork unitOfWorke, IMapper mapper)
         {
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;
