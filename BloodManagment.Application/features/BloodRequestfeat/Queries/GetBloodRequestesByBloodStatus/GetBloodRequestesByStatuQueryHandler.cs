@@ -9,9 +9,9 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodR
         : IRequestHandler<GetBloodRequestesByStatuQuery, ReadOnlyCollection<GetBloodRequestesByStatuDto>>
     {
         private readonly IUnitOfWork unitOfWorke;
-        private readonly Mapper mapper;
+        private readonly IMapper mapper;
 
-        public GetBloodRequestesByStatuQueryHandler(IUnitOfWork unitOfWorke, Mapper mapper)
+        public GetBloodRequestesByStatuQueryHandler(IUnitOfWork unitOfWorke, IMapper mapper)
         {
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;

@@ -1,3 +1,6 @@
+using BloodManagment.Application.Extension;
+using BloodManagment.Infrastructure.Extension;
+
 namespace BloodManagment.Mvc
 {
     public class Program
@@ -8,6 +11,9 @@ namespace BloodManagment.Mvc
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.InfrastructureServiceCollectionExtension(builder.Configuration);
+
+            builder.Services.ApplicationServiceCollectionExtension();
 
             var app = builder.Build();
 
@@ -28,7 +34,7 @@ namespace BloodManagment.Mvc
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }

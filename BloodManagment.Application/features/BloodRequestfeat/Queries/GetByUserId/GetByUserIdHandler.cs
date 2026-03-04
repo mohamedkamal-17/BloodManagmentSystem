@@ -8,9 +8,9 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetByUser
     public class GetByUserIdHandler : IRequestHandler<GetByUserIdQuery, ReadOnlyCollection<GetByUserIdDTO>>
     {
         private readonly IUnitOfWork unitOfWorke;
-        private readonly Mapper mapper;
+        private readonly IMapper mapper;
 
-        public GetByUserIdHandler(IUnitOfWork unitOfWorke, Mapper mapper)
+        public GetByUserIdHandler(IUnitOfWork unitOfWorke, IMapper mapper)
         {
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;

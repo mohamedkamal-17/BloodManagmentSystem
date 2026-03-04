@@ -1,0 +1,226 @@
+﻿@using BloodManagment.Application.features.Dashboardfeat.Queries.GetDashboardData
+@model DashboardDto
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "الرئيسية";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    .stat-card {
+        background:#e8e2d8;
+        border-radius:20px;
+        padding:25px;
+        text-align:center;
+        transition:.3s;
+    }
+    .stat-card:hover {
+        transform:translateY(-5px);
+    }
+
+    .card-box {
+        background:#e8e2d8;
+        border-radius:20px;
+        padding:25px;
+    }
+
+    .donor-item {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:15px;
+    }
+
+    .badge-status {
+        padding:6px 14px;
+        border-radius:20px;
+        font-size:13px;
+    }
+
+    .status-pending {
+        background:#fff3cd;
+    }
+
+    .status-done {
+        background:#d4edda;
+    }
+</style>
+
+<h3 class="mb-4">الرئيسية</h3>
+
+<!-- ===================== TOP CARDS ===================== -->
+
+<div class="row mb-4">
+
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <h6>طلبات الدم</h6>
+            <h3>@Model.TotalBloodRequests</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <h6>المستخدمين</h6>
+            <h3>@Model.TotalUsers</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <h6>التبرعات</h6>
+            <h3>@Model.TotalDonations</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat-card">
+            <h6>بنك الدم</h6>
+            <h3>@Model.TotalBloodUnits</h3>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===================== CHARTS ===================== -->
+
+<div class="row mb-4">
+
+    <div class="col-md-6 mb-3">
+        <div class="card-box">
+            <h6 class="mb-3">تقرير فصائل الدم</h6>
+            <canvas id="bloodChart"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card-box">
+            <h6 class="mb-3">تقرير طلبات الدم</h6>
+            <canvas id="requestChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===================== DONORS & REQUESTS ===================== -->
+
+<div class="row">
+
+    <!-- Top Donors -->
+    <div class="col-md-4 mb-3">
+        <div class="card-box">
+            <h6 class="mb-3">أكثر 6 متبرعين</h6>
+
+            @if (Model.TopDonors != null && Model.TopDonors.Any())
+            {
+                foreach (var donor in Model.TopDonors)
+                {
+                    <div class="donor-item">
+                        <span>@donor.Name</span>
+                        <span class="badge bg-danger">
+                            @donor.DonationCount
+                        </span>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted">لا يوجد بيانات</p>
+            }
+        </div>
+    </div>
+
+    <!-- Urgent Requests -->
+    <div class="col-md-8 mb-3">
+        <div class="card-box">
+            <h6 class="mb-3">طلبات الدم العاجلة</h6>
+
+            @if (Model.UrgentRequests != null && Model.UrgentRequests.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>المريض</th>
+                                <th>المستشفى</th>
+                                <th>الفصيلة</th>
+                                <th>الكمية</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var req in Model.UrgentRequests)
+                            {
+                                <tr>
+                                    <td>@req.PatientName</td>
+                                    <td>@req.Hospital</td>
+                                    <td>@req.BloodType</td>
+                                    <td>@req.Quantity</td>
+                                    <td>
+                                        <span class="badge-status status-pending">
+                                            @req.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">لا يوجد طلبات حالياً</p>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ===================== CHART SCRIPT ===================== -->
+
+<script>
+
+    var bloodLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.BloodTypeStats.Select(x => x.BloodType)));
+
+    var bloodCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.BloodTypeStats.Select(x => x.Count)));
+
+    new Chart(document.getElementById('bloodChart'), {
+        type: 'bar',
+        data: {
+            labels: bloodLabels,
+            datasets: [{
+                label: 'عدد المتبرعين',
+                data: bloodCounts,
+                backgroundColor: '#dc3545'
+            }]
+        }
+    });
+
+
+    var requestLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.WeeklyRequests.Select(x => x.Day)));
+
+    var requestCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.WeeklyRequests.Select(x => x.Count)));
+
+    new Chart(document.getElementById('requestChart'), {
+        type: 'line',
+        data: {
+            labels: requestLabels,
+            datasets: [{
+                label: 'طلبات الدم',
+                data: requestCounts,
+                borderColor: '#dc3545',
+                backgroundColor: 'rgba(220,53,69,0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        }
+    });
+
+</script>

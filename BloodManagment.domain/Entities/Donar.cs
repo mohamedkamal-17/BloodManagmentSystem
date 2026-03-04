@@ -14,7 +14,7 @@
 
         public DateTime? LastDonationDate { get; set; }
 
-        public short DonationCount { get; set; } = default;
+        public int DonationCount { get; set; } = default;
 
         public bool IsEilgibleToDonate { get; set; } = default;
 

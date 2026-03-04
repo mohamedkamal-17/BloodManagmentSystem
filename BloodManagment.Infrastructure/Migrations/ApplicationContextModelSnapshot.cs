@@ -362,6 +362,9 @@ namespace BloodManagment.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BloodGroup")
+                        .HasColumnType("int");
+
                     b.Property<string>("DonarCode")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -370,13 +373,20 @@ namespace BloodManagment.Infrastructure.Migrations
                     b.Property<short>("DonationCount")
                         .HasColumnType("smallint");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsEilgibleToDonate")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDonationDate")
+                    b.Property<DateTime?>("LastDonationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("NextDonationDate")
+                    b.Property<DateTime?>("NextDonationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
@@ -588,13 +598,13 @@ namespace BloodManagment.Infrastructure.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -764,7 +774,7 @@ namespace BloodManagment.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("HospitalName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -838,6 +848,9 @@ namespace BloodManagment.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BloodGroup")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

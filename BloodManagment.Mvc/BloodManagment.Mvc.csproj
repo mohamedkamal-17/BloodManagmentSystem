@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BloodManagment.Application\BloodManagment.Application.csproj" />
+    <ProjectReference Include="..\BloodManagment.Infrastructure\BloodManagment.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

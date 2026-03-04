@@ -1,13 +1,12 @@
 ﻿using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestesByBloodStatu;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloodGroup;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByUserId;
+using BloodManagment.Application.features.BloodRequestfeat.Queries.GetUrgentRequests;
 using BloodManagment.domain.Contracts.Repositorise;
 using BloodManagment.domain.Entities;
 using BloodManagment.Infrastructure.DataHelper;
 using BloodManagment.Infrastructure.Repositoris;
 using Microsoft.EntityFrameworkCore;
-
-
 
 namespace BloodManagment.Infrastructure.Repositorise
 {
@@ -47,8 +46,15 @@ namespace BloodManagment.Infrastructure.Repositorise
             return await ApplaySpacedication(new GetByUserIdSpec(userID)).ToListAsync();
         }
 
+        public async Task<int> GetCountAsync()
+        {
+            return await _dbset.CountAsync();
+        }
 
-
+        public async Task<List<BloodRequest>> GetUrgentRequests()
+        {
+            return await ApplaySpacedication(new GetUrgentBloodRequestsSpec()).ToListAsync();
+        }
     }
 
 

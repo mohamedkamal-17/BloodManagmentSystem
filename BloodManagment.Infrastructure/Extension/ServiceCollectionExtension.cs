@@ -1,8 +1,10 @@
 ﻿using BloodManagment.Application.Commane;
 using BloodManagment.Application.Extension;
+using BloodManagment.domain.Contracts.Repositorise;
 using BloodManagment.domain.Entities;
 using BloodManagment.Infrastructure.Comman;
 using BloodManagment.Infrastructure.DataHelper;
+using BloodManagment.Infrastructure.Repositorise;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -50,10 +52,6 @@ namespace BloodManagment.Infrastructure.Extension
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-
-
-
-
             services.AddDbContext<ApplicationContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("cs"));
@@ -72,6 +70,24 @@ namespace BloodManagment.Infrastructure.Extension
             })
             .AddEntityFrameworkStores<ApplicationContext>()
             .AddDefaultTokenProviders();
+
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+            services.AddScoped<IAnemiaBloodRequestRepository, AnemiaBloodRequestRepository>();
+            services.AddScoped<IBloodInventoryRepository, BloodInventoryRepository>();
+            services.AddScoped<IDonationRequestRepository, DonationRequestRepository>();
+            services.AddScoped<IPasswordResetOtpRepository, PasswordResetOtpRepository>();
+            services.AddScoped<IDonarRepository, DonarRepository>();
+            services.AddScoped<IHospitalRepository, HospitalRepository>();
+            services.AddScoped<IHealthConditionRepository, HealthConditionRepository>();
+            services.AddScoped<IThalassemiaPatientRepository, ThalassemiaPatientRepository>();
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+            services.AddScoped<IOtpService, OtpService>();
+
+
+
+
+            // 🔥 Register UnitOfWork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

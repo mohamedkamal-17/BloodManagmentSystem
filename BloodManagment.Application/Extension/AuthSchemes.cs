@@ -4,7 +4,7 @@
     {
 
         public const string Jwt = "Jwt";
-        public const string Cookie = "Identity.Application";
+        public const string Cookie = "MyAppCookie";
 
     }
 }

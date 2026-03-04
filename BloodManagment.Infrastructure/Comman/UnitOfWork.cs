@@ -5,7 +5,7 @@ using BloodManagment.Infrastructure.Repositorise;
 
 namespace BloodManagment.Infrastructure.Comman
 {
-    public class UnitOfworke : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
 
     {
         private ApplicationContext context;
@@ -20,10 +20,12 @@ namespace BloodManagment.Infrastructure.Comman
 
         private IHospitalRepository hospitalRepository;
 
-        private ThalassemiaPatientRepository thalassemiaPatientRepository;
+        private IThalassemiaPatientRepository thalassemiaPatientRepository;
+
+        private IBloodUnitRepository bloodUnitRepository;
 
 
-        public UnitOfworke(ApplicationContext context)
+        public UnitOfWork(ApplicationContext context)
         {
             this.context = context;
         }
@@ -53,6 +55,8 @@ namespace BloodManagment.Infrastructure.Comman
 
         public IThalassemiaPatientRepository ThalassemiaPatientRepository =>
             thalassemiaPatientRepository ??= new ThalassemiaPatientRepository(context);
+        public IBloodUnitRepository BloodUnitRepository =>
+            bloodUnitRepository ??= new BloodUnitRepository(context);
 
         public void Dispose()
         {
