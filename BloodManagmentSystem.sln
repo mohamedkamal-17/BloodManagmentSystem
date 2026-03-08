@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{AF5E04B4-3BD0-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodManagment.Api", "BloodManagment.Api\BloodManagment.Api.csproj", "{4FB4D519-9A84-4357-AD90-B87B8057964C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodManagment.Mvc", "BloodManagment.Mvc\BloodManagment.Mvc.csproj", "{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodManagment.Mvc", "BloodManagment.Mvc\BloodManagment.Mvc.csproj", "{9B91C3A0-41F3-45B7-ADEA-1FD510E516FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

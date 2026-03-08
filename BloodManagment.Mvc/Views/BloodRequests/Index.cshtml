@@ -1,0 +1,26 @@
+﻿@model IEnumerable<BloodManagment.Mvc.ViewModels.BloodRequests.BloodRequestCardVM>
+
+<div class="container">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <button class="btn btn-danger">
+            إضافة طلب
+        </button>
+
+        <input type="text"
+               class="form-control w-50"
+               placeholder="ابحث عن أي طلب دم..." />
+
+    </div>
+
+    <div class="row">
+
+        @foreach (var request in Model)
+        {
+            <partial name="_RequestCard" model="request" />
+        }
+
+    </div>
+
+</div>

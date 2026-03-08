@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BloodManagment.Mvc.ViewModels.BloodRequests.BloodRequestCardVM>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>طالب الدم</th>
+            <th>المستشفى</th>
+            <th>الحالة</th>
+            <th>الفصيلة</th>
+            <th>النوع</th>
+            <th>المساهمين</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var r in Model)
+        {
+            <tr>
+
+                <td>@r.RequestNumber</td>
+                <td>@r.PatientName</td>
+                <td>@r.HospitalName</td>
+
+                <td>
+                    <span class="badge bg-warning">@r.Status</span>
+                </td>
+
+                <td>@r.BloodGroup</td>
+
+                <td>@r.RequestType</td>
+
+                <td>@r.Contributors</td>
+
+                <td>
+
+                    <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                    </button>
+
+                    <button class="btn btn-outline-danger btn-sm">
+                        تعيين
+                    </button>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

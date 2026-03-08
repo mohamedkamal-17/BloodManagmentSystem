@@ -4,6 +4,7 @@ namespace BloodManagment.Application.features.BloodInventoryfeat.Queries.GetInve
 {
     public class GetInventoryByBloodGroupDto
     {
+        public int Id { get; set; }
         public int Quantity { get; set; }
 
         public BloodGroup BloodGroup { get; set; }

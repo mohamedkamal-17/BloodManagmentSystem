@@ -1,15 +1,19 @@
 ﻿using BloodManagment.domain.Contracts.Reposetorise;
 using BloodManagment.domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BloodManagment.domain.Contracts.Repositorise
 {
-    public interface IBloodUnitRepository:IGenericRepository<BloodUnit>
+    public interface IBloodUnitRepository : IGenericRepository<BloodUnit>
     {
+        Task<IReadOnlyList<BloodUnit>> GetAllAsync();
+
+        Task<BloodUnit?> GetByIdAsync(int id);
+
+        Task<IReadOnlyList<BloodUnit>> GetByBloodGroupAsync(BloodGroup bloodGroup);
+
+        Task<IReadOnlyList<BloodUnit>> GetAvailableUnitsAsync();
+
+        Task<IReadOnlyList<BloodUnit>> GetByInventoryIdAsync(int inventoryId);
         Task<int> GetCountAsync();
     }
 }

@@ -8,6 +8,8 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodR
     {
         public GetBloodRequestesByStatuSpc(RequestStatus status) : base(request => request.Status == status)
         {
+            Includes.Add(request => request.Rescipient);
+            Includes.Add(request => request.Hospital);
 
         }
     }
