@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBloodRequest
 {
-    public class CreatBloodRequestCommand : IRequest<string>
+    public class CreatBloodRequestCommand : IRequest<int>
     {
         public DateTime RequestDate { get; set; }
         public bool IsEmergency { get; set; }

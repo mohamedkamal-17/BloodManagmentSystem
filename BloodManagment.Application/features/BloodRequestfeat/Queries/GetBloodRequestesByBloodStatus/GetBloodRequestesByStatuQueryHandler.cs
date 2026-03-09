@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestesByBloodStatus
 {
     public class GetBloodRequestesByStatuQueryHandler
-        : IRequestHandler<GetBloodRequestesByStatuQuery, ReadOnlyCollection<GetBloodRequestesByStatuDto>>
+        : IRequestHandler<GetBloodRequestesByStatuQuery, ReadOnlyCollection<BloodRequestDto>>
     {
         private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
@@ -17,11 +17,11 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodR
             this.mapper = mapper;
         }
 
-        public async Task<ReadOnlyCollection<GetBloodRequestesByStatuDto>> Handle(GetBloodRequestesByStatuQuery request, CancellationToken cancellationToken)
+        public async Task<ReadOnlyCollection<BloodRequestDto>> Handle(GetBloodRequestesByStatuQuery request, CancellationToken cancellationToken)
         {
 
             var bloodRequests = await unitOfWorke.BloodRequestRepository.GetByStatusAsync(request.status);
-            return mapper.Map<ReadOnlyCollection<GetBloodRequestesByStatuDto>>(bloodRequests);
+            return mapper.Map<ReadOnlyCollection<BloodRequestDto>>(bloodRequests);
         }
     }
 }

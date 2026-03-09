@@ -24,6 +24,9 @@ namespace BloodManagment.Infrastructure.Comman
 
         private IBloodUnitRepository bloodUnitRepository;
 
+        private IRecipientRepository recipientRepository;
+        private ILabTechnicianRepository labTechnicianRepository;
+
 
         public UnitOfWork(ApplicationContext context)
         {
@@ -57,6 +60,13 @@ namespace BloodManagment.Infrastructure.Comman
             thalassemiaPatientRepository ??= new ThalassemiaPatientRepository(context);
         public IBloodUnitRepository BloodUnitRepository =>
             bloodUnitRepository ??= new BloodUnitRepository(context);
+
+        public IRecipientRepository RecipientRepository =>
+            recipientRepository ??= new RecipientRepository(context);
+
+        public ILabTechnicianRepository LabTechnicianRepository =>
+            labTechnicianRepository ??= new LabTechnicianRepository(context);
+
 
         public void Dispose()
         {

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBloodRequest;
-using BloodManagment.Application.features.BloodRequestfeat.Queries.GetAllBloodRequests;
-using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloodGroup;
-using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByUserId;
+using BloodManagment.Application.features.BloodRequestfeat.Queries;
 using BloodManagment.domain.Entities;
 
 namespace BloodManagment.Application.maping
@@ -12,9 +10,11 @@ namespace BloodManagment.Application.maping
         public BloodRequestProfile()
         {
             // CreateMap<Source, Destination>();
-            CreateMap<BloodRequest, GetByBloodGroupDTO>();
-            CreateMap<BloodRequest, GetByUserIdDTO>();
-            CreateMap<BloodRequest, GetAllBloodRequestsDto>();
+            CreateMap<BloodRequest, BloodRequestDto>()
+               .ForMember(dest => dest.HospitalName,
+                          opt => opt.MapFrom(src => src.Hospital.Name)
+                          ).ForMember(dest => dest.PatientName,
+                          opt => opt.MapFrom(src => src.Rescipient.FullName));
             CreateMap<CreatBloodRequestCommand, BloodRequest>();
 
         }

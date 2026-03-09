@@ -1,21 +1,25 @@
-﻿namespace BloodManagment.Mvc.ViewModels.BloodRequests
+﻿using BloodManagment.domain.Entities;
+
+namespace BloodManagment.Mvc.ViewModels.BloodRequests
 {
     public class BloodRequestCardVM
     {
-        public string RequestNumber { get; set; }
+        public int Id { get; set; }
 
         public string PatientName { get; set; }
 
-        public string BloodGroup { get; set; }
+        public BloodGroup BloodGroup { get; set; }
 
-        public string Status { get; set; }
+        public string Reason { get; set; }
 
-        public string RequestType { get; set; }
+        public DateTime RequestDate { get; set; }
 
-        public DateTime RequiredDate { get; set; }
+        public bool IsEmergency { get; set; }
+
+        public RequestStatus Status { get; set; }
 
         public string HospitalName { get; set; }
 
-        public int Contributors { get; set; }
+        public string UserImage { get; set; }
     }
 }

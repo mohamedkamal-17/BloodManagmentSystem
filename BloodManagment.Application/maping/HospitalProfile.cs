@@ -4,12 +4,13 @@ using BloodManagment.domain.Entities;
 
 namespace BloodManagment.Application.maping
 {
-    internal class HospitalProfile : Profile
+    public class HospitalProfile : Profile
     {
-        HospitalProfile()
+        public HospitalProfile()
         {
 
-            CreateMap<Hospital, HospitalDto>().ReverseMap();
+            CreateMap<Hospital, HospitalDto>();
+            CreateMap<HospitalDto, Hospital>();
         }
 
 

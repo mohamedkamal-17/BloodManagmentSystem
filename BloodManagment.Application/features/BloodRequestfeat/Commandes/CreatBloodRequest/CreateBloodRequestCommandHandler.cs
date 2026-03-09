@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using BloodManagment.Application.Commane;
 using BloodManagment.domain.Entities;
+using MediatR;
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBloodRequest
 {
-    internal class CreateBloodRequestCommandHandler
+    internal class CreateBloodRequestCommandHandler : IRequestHandler<CreatBloodRequestCommand, int>
     {
 
 
@@ -18,9 +19,9 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBl
             this.mapper = mapper;
         }
 
-        public async Task<string> Handle(
-            CreatBloodRequestCommand request,
-            CancellationToken cancellationToken)
+
+
+        async Task<int> IRequestHandler<CreatBloodRequestCommand, int>.Handle(CreatBloodRequestCommand request, CancellationToken cancellationToken)
         {
 
             var hospital = await unitOfWorke.HospitalRepository.GetByIdAsync(request.HospitalId);
@@ -34,27 +35,17 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBl
             var requestCode = $"BR-{DateTime.UtcNow:yyyyMMddHHmmssfff}";
 
             var brequest = mapper.Map<CreatBloodRequestCommand, BloodRequest>(request);
+            brequest.RequestCode = requestCode;
             // 4️⃣ Create Entity
-            var bloodRequest = new BloodRequest
-            {
-                RequestCode = requestCode,
-                RequestDate = request.RequestDate,
-                IsEmergency = request.IsEmergency,
-                HospitalId = request.HospitalId,
-                Reason = request.Reason,
-                RescipientId = request.RescipientId,
-                LabTechnicianId = request.LabTechnicianId,
-                BloodGroup = request.BloodGroup,
-                Status = RequestStatus.Pending
-            };
+
 
             // 5️⃣ Add to Repository
-            await unitOfWorke.BloodRequestRepository.AddAsync(bloodRequest);
+            await unitOfWorke.BloodRequestRepository.AddAsync(brequest);
 
             // 6️⃣ Commit Transaction
-            await unitOfWorke.SaveChangesAsync();
 
-            return requestCode;
+
+            return await unitOfWorke.SaveChangesAsync();
         }
     }
 }

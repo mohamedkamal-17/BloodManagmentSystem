@@ -1,15 +1,33 @@
-﻿namespace BloodManagment.domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BloodManagment.domain.Entities
 {
+
     public enum BloodGroup
     {
-        A_Positive,     // A+
-        A_Negative,     // A-
-        B_Positive,     // B+
-        B_Negative,     // B-
-        AB_Positive,    // AB+
-        AB_Negative,    // AB-
-        O_Positive,     // O+
-        O_Negative      // O-
-    }
+        [Display(Name = "A+")]
+        A_Positive,
 
+        [Display(Name = "A-")]
+        A_Negative,
+
+        [Display(Name = "B+")]
+        B_Positive,
+
+        [Display(Name = "B-")]
+        B_Negative,
+
+        [Display(Name = "AB+")]
+        AB_Positive,
+
+        [Display(Name = "AB-")]
+        AB_Negative,
+
+        [Display(Name = "O+")]
+        O_Positive,
+
+        [Display(Name = "O-")]
+        O_Negative
+
+    }
 }

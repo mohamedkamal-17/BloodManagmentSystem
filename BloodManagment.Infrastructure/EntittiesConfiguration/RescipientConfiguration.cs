@@ -9,7 +9,7 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
         public void Configure(EntityTypeBuilder<Rescipient> builder)
         {
             builder.Property(x => x.RescipientCode).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.Gender).HasConversion<string>().IsRequired();
+
 
             builder.HasOne(x => x.User)
                 .WithMany()

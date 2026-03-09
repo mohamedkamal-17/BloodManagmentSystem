@@ -1,12 +1,19 @@
 ﻿namespace BloodManagment.domain.Entities
 {
+    using System.ComponentModel.DataAnnotations;
+
     public enum Gender
     {
+        [Display(Name = "ذكر")]
         Male,
+
+        [Display(Name = "انثى")]
         Female,
-        Other,       // لو عايز تدعم خيارات غير ثنائية
-        Unknown      // لو لم يتم تحديد الجنس بعد
+
+        [Display(Name = "غير ذلك")]
+        Other,        // لو عايز تدعم خيارات غير ثنائية
+
+
+
     }
-
-
 }

@@ -7,6 +7,7 @@ namespace BloodManagment.domain.Entities
         public DateTime HireDate { get; set; }
 
         public string UserId { get; set; }
+        public string Name { get; set; }
         public ApplicationUser User { get; set; }
 
         public int HospitalId { get; set; }

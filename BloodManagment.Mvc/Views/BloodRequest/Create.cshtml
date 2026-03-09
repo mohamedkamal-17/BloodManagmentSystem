@@ -1,0 +1,177 @@
+﻿@using BloodManagment.Application.features.BloodRequestfeat.Queries.GetCreateBloodRequestData
+@using BloodManagment.Mvc.ViewModels.BloodRequests
+@model CreateBloodRequestVM
+
+@{
+    Layout = "_DashboardLayout";
+}
+
+<div class="modal-overlay">
+
+    <div class="request-modal">
+
+        <h4 class="fw-bold text-center mb-3">إضافة طلب دم</h4>
+        <hr />
+
+        <form asp-action="Create" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row g-3">
+
+                <!-- Blood Group -->
+                <div class="col-md-6">
+                    <label class="form-label">نوع الفصيلة</label>
+
+                    <select asp-for="Command.BloodGroup"
+                            asp-items="Model.BloodGroups"
+                            class="form-control custom-input">
+
+                        <option value="">اختار نوع فصيلة الدم</option>
+
+                    </select>
+
+                    <span asp-validation-for="Command.BloodGroup" class="text-danger"></span>
+                </div>
+
+
+                <!-- Recipient -->
+                <div class="col-md-6">
+                    <label class="form-label">اسم المستفيد</label>
+
+                    <select asp-for="Command.RescipientId"
+                            asp-items="Model.Recipients"
+                            class="form-control custom-input">
+
+                        <option value="">اختر المستفيد</option>
+
+                    </select>
+
+                    <span asp-validation-for="Command.RescipientId" class="text-danger"></span>
+                </div>
+
+
+                <!-- Request Date -->
+                <div class="col-md-6">
+                    <label class="form-label">تاريخ الطلب</label>
+
+                    <input asp-for="Command.RequestDate"
+                           type="date"
+                           class="form-control custom-input" />
+
+                    <span asp-validation-for="Command.RequestDate" class="text-danger"></span>
+                </div>
+
+
+                <!-- Hospital -->
+                <div class="col-md-6">
+                    <label class="form-label">المستشفى</label>
+
+                    <select asp-for="Command.HospitalId"
+                            asp-items="Model.Hospitals"
+                            class="form-control custom-input">
+
+                        <option value="">اختر المستشفى</option>
+
+                    </select>
+
+                    <span asp-validation-for="Command.HospitalId" class="text-danger"></span>
+                </div>
+
+
+                <!-- Reason -->
+                <div class="col-md-6">
+                    <label class="form-label">الحالة</label>
+
+                    <input asp-for="Command.Reason"
+                           class="form-control custom-input"
+                           placeholder="سبب طلب الدم" />
+
+                    <span asp-validation-for="Command.Reason" class="text-danger"></span>
+                </div>
+
+
+                <!-- Lab Technician -->
+                <div class="col-md-6">
+                    <label class="form-label">فني المختبر</label>
+
+                    <select asp-for="Command.LabTechnicianId"
+                            asp-items="Model.LabTechnicians"
+                            class="form-control custom-input">
+
+                        <option value="">اختر فني المختبر</option>
+
+                    </select>
+
+                    <span asp-validation-for="Command.LabTechnicianId" class="text-danger"></span>
+                </div>
+
+
+                <!-- Emergency -->
+                <div class="col-12 mt-2">
+
+                    <div class="form-check form-switch">
+
+                        <input asp-for="Command.IsEmergency"
+                               class="form-check-input" />
+
+                        <label class="form-check-label">
+                            طلب طارئ
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="text-center mt-4 d-flex justify-content-center gap-3">
+
+                <button type="submit" class="btn btn-danger px-5 rounded-pill">
+                    إضافة الطلب
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary px-4 rounded-pill">
+                    إلغاء
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<style>
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .request-modal {
+        background: #e8e2d8;
+        padding: 35px;
+        width: 700px;
+        border-radius: 20px;
+    }
+
+    .custom-input {
+        background: #e0e0e0;
+        border: none;
+        border-radius: 15px;
+        padding: 12px;
+    }
+
+        .custom-input:focus {
+            box-shadow: none;
+        }
+</style>

@@ -1,5 +1,6 @@
 using BloodManagment.Application.Extension;
 using BloodManagment.Infrastructure.Extension;
+using System.Text.Json.Serialization;
 
 namespace BloodManagment.Api
 {
@@ -22,7 +23,11 @@ namespace BloodManagment.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                // Convert all enums to string in JSON responses
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            }); ;
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.

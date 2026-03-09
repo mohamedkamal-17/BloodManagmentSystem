@@ -12,8 +12,6 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
 
             builder.Property(x => x.ResponsibleEntity).HasMaxLength(200).IsRequired();
             builder.Property(x => x.BloodTestIssuer).HasMaxLength(200);
-            builder.Property(x => x.BloodGroup).HasConversion<string>();
-            builder.Property(x => x.Status).HasConversion<string>();
 
             builder.HasOne(x => x.Patient)
                 .WithMany()

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestesByBloodStatus
 {
-    public class GetBloodRequestesByStatuQuery : IRequest<ReadOnlyCollection<GetBloodRequestesByStatuDto>>
+    public class GetBloodRequestesByStatuQuery : IRequest<ReadOnlyCollection<BloodRequestDto>>
     {
         public RequestStatus status { get; set; }
     }

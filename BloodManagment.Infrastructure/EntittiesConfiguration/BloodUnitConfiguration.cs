@@ -16,12 +16,10 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
                    .HasMaxLength(200)
                    .IsRequired();
 
-            builder.Property(x => x.BloodGroup)
-                   .HasConversion<string>() // Store enum as string
-                   .IsRequired();
+
 
             builder.Property(x => x.Status)
-                   .HasConversion<string>() // Store enum as string
+
                    .IsRequired();
 
             builder.Property(x => x.DonationDate)

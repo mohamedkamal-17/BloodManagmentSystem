@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BloodManagment.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class inital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -222,7 +222,7 @@ namespace BloodManagment.Infrastructure.Migrations
                     BloodGroup = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     LastDonationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DonationCount = table.Column<short>(type: "smallint", nullable: false),
+                    DonationCount = table.Column<int>(type: "int", nullable: false),
                     IsEilgibleToDonate = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -244,7 +244,8 @@ namespace BloodManagment.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RescipientCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -265,8 +266,8 @@ namespace BloodManagment.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    BloodGroup = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BloodGroup = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     HospitalId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -295,6 +296,7 @@ namespace BloodManagment.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HospitalId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -367,7 +369,7 @@ namespace BloodManagment.Infrastructure.Migrations
                     BloodGroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitsDonated = table.Column<int>(type: "int", nullable: false),
                     DonationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
                     DonationLocation = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     DonorId = table.Column<int>(type: "int", nullable: false)
@@ -392,7 +394,7 @@ namespace BloodManagment.Infrastructure.Migrations
                     RequestCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PreferredDonationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Statu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Statu = table.Column<int>(type: "int", nullable: false),
                     HealthConditionId = table.Column<int>(type: "int", nullable: false),
                     DonarId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -431,7 +433,7 @@ namespace BloodManagment.Infrastructure.Migrations
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HospitalName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Diagnosis = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     RecipientId = table.Column<int>(type: "int", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -459,10 +461,10 @@ namespace BloodManagment.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BloodGroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BloodGroup = table.Column<int>(type: "int", nullable: false),
                     DonationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     StorageLocation = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     BloodInventoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
@@ -497,8 +499,8 @@ namespace BloodManagment.Infrastructure.Migrations
                     Reason = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     RescipientId = table.Column<int>(type: "int", nullable: true),
                     LabTechnicianId = table.Column<int>(type: "int", nullable: true),
-                    BloodGroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BloodGroup = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -536,8 +538,8 @@ namespace BloodManagment.Infrastructure.Migrations
                 {
                     RequestCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BloodGroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BloodGroup = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     ResponsibleEntity = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     AttendanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BloodTestDate = table.Column<DateTime>(type: "datetime2", nullable: false),

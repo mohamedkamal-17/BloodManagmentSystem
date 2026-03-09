@@ -28,7 +28,7 @@ namespace BloodManagment.Application.features.Dashboardfeat.Queries.GetDashboard
 
             dto.TotalUsers = await userManager.Users.CountAsync();
             dto.TotalBloodRequests = await unitOfWork.BloodRequestRepository.GetCountAsync();
-            dto.TotalDonations = await unitOfWork.DonationRequestRepository.GetByStatusAsync(RequestStatus.Completed).ContinueWith(t => t.Result.Count);
+            dto.TotalDonations = await unitOfWork.DonationRequestRepository.GetByStatusAsync(RequestStatus.Accepted).ContinueWith(t => t.Result.Count);
             dto.TotalBloodUnits = await unitOfWork.BloodUnitRepository.GetCountAsync();
             var invetoey = await unitOfWork.BloodInventoryRepository.GetAllAsync();
             dto.BloodTypeStats = invetoey

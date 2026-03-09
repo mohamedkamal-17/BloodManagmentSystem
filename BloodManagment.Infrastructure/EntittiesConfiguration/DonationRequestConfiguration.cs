@@ -9,7 +9,7 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
         public void Configure(EntityTypeBuilder<DonationRequest> builder)
         {
             builder.Property(x => x.RequestCode).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.Statu).HasConversion<string>();
+
 
             builder.HasOne(x => x.HealthCondition)
                 .WithMany(x => x.DonationRequests)

@@ -9,8 +9,6 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
         public void Configure(EntityTypeBuilder<BloodRequest> builder)
         {
             builder.Property(x => x.Reason).HasMaxLength(300);
-            builder.Property(x => x.BloodGroup).HasConversion<string>();
-            builder.Property(x => x.Status).HasConversion<string>();
 
             builder.HasOne(x => x.Hospital)
                 .WithMany(x => x.BloodRequests)

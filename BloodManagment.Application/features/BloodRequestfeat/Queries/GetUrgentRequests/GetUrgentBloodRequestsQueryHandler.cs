@@ -2,9 +2,9 @@
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetUrgentRequests
 {
-    public class GetUrgentBloodRequestsQueryHandler : IRequestHandler<GetUrgentBloodRequestsQuery, List<UrgentBloodRequestsDto>>
+    public class GetUrgentBloodRequestsQueryHandler : IRequestHandler<GetUrgentBloodRequestsQuery, List<BloodRequestDto>>
     {
-        public Task<List<UrgentBloodRequestsDto>> Handle(GetUrgentBloodRequestsQuery request, CancellationToken cancellationToken)
+        public Task<List<BloodRequestDto>> Handle(GetUrgentBloodRequestsQuery request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

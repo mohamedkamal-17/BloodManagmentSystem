@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloodGroup
 {
-    public class GetByBloodGroupQueryHandelr : IRequestHandler<GetByBloodGroupQuery, ReadOnlyCollection<GetByBloodGroupDTO>>
+    public class GetByBloodGroupQueryHandelr : IRequestHandler<GetByBloodGroupQuery, ReadOnlyCollection<BloodRequestDto>>
     {
         private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
@@ -15,12 +15,12 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloo
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;
         }
-        public async Task<ReadOnlyCollection<GetByBloodGroupDTO>> Handle(GetByBloodGroupQuery request, CancellationToken cancellationToken)
+        public async Task<ReadOnlyCollection<BloodRequestDto>> Handle(GetByBloodGroupQuery request, CancellationToken cancellationToken)
         {
 
 
             var requstes = await unitOfWorke.BloodRequestRepository.GetByBloodGroupAsync(request.BloodGroup);
-            return mapper.Map<ReadOnlyCollection<GetByBloodGroupDTO>>(requstes);
+            return mapper.Map<ReadOnlyCollection<BloodRequestDto>>(requstes);
         }
     }
 }

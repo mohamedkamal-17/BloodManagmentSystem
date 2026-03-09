@@ -1,0 +1,158 @@
+﻿
+@using BloodManagment.Application.features.BloodRequestfeat.Queries
+@model IReadOnlyCollection<BloodRequestDto>
+
+@{
+    Layout = "_DashboardLayout";
+}
+
+<div class="container-fluid">
+
+    <div class="text-center mb-3">
+        <h2 class="fw-bold">الطلبات المستلمة</h2>
+        <hr style="width:80%; margin:auto;">
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mb-4">
+
+        <a asp-action="Create" class="btn btn-danger px-4 rounded-pill">
+            إضافة طلب
+        </a>
+
+        <button class="btn btn-outline-danger px-4 rounded-pill">
+            فرز
+        </button>
+
+        <input class="form-control w-25" placeholder="ابحث عن أي طلب دم..." />
+
+    </div>
+
+    <!-- Cards -->
+    <div class="row g-4">
+
+        @foreach (var item in Model)
+        {
+            <partial name="_BloodRequestCard" model="item" />
+        }
+
+    </div>
+
+</div>
+
+@if (ViewBag.Details != null)
+{
+    <partial name="_BloodRequestDetails"
+             model="ViewBag.Details" />
+}
+
+
+@*@ @using BloodManagment.Application.features.BloodRequestfeat.Queries
+
+@model IReadOnlyCollection<BloodRequestDto>
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "الطلبات المستلمة";
+}
+@if (ViewBag.Details != null)
+{
+    <partial name="_BloodRequestDetails"
+             model="ViewBag.Details" />
+}
+
+<div class="container-fluid">
+
+    <!-- Title -->
+    <div class="text-center mb-3">
+        <h2 class="fw-bold">الطلبات المستلمة</h2>
+        <hr style="width:80%; margin:auto;">
+    </div>
+
+    <!-- Controls -->
+    <div class="d-flex justify-content-center align-items-center gap-3 mb-4 flex-wrap">
+
+        <!-- Add Request -->
+        <a asp-action="Create" class="btn btn-danger px-4 rounded-pill">
+            إضافة طلب
+        </a>
+
+        <!-- Filter -->
+        <button class="btn btn-outline-danger px-4 rounded-pill d-flex align-items-center gap-2">
+            <i class="bi bi-funnel"></i>
+            فرز
+        </button>
+
+        <!-- Search -->
+        <div class="search-wrapper position-relative">
+
+            <input type="text"
+                   class="form-control search-input"
+                   placeholder="ابحث عن أي طلب دم..." />
+
+            <span class="search-icon">
+                <i class="bi bi-search"></i>
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Cards -->
+    <div class="row g-4">
+
+        @foreach (var item in Model)
+        {
+            <partial name="_BloodRequestCard" model="item" />
+        }
+
+    </div>
+
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="detailsModalContent">
+            </div>
+        </div>
+
+</div>
+
+<style>
+
+    .search-wrapper {
+        width: 420px;
+    }
+
+    .search-input {
+        border-radius: 30px;
+        padding: 12px 45px 12px 15px;
+        border: 1px solid #e74c3c;
+    }
+
+        .search-input:focus {
+            border-color: #dc3545;
+            box-shadow: none;
+        }
+
+    .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #777;
+    }
+</style>
+
+
+      <script>
+          $(document).on("click", ".view-request", function (e) {
+
+              e.preventDefault();
+
+          var url = $(this).attr("href");
+
+          $("#detailsModalContent").load(url, function () {
+              $("#detailsModal").modal("show");
+          });
+
+      });
+  </script>
+ *@

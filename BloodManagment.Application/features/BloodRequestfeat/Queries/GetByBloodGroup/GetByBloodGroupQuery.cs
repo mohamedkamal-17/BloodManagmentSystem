@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloodGroup
 {
-    public class GetByBloodGroupQuery : IRequest<ReadOnlyCollection<GetByBloodGroupDTO>>
+    public class GetByBloodGroupQuery : IRequest<ReadOnlyCollection<BloodRequestDto>>
     {
         public BloodGroup BloodGroup { get; set; }
     }

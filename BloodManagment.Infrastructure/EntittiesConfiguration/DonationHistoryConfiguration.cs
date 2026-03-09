@@ -11,7 +11,7 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
             builder.Property(x => x.BloodGroup).HasConversion<string>();
             builder.Property(x => x.DonationLocation).HasMaxLength(200);
             builder.Property(x => x.Notes).HasMaxLength(500);
-            builder.Property(x => x.status).HasConversion<string>();
+
 
             builder.HasOne(x => x.Donor)
                 .WithMany()

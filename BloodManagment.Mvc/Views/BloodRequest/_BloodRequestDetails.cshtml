@@ -1,0 +1,79 @@
+﻿@model BloodManagment.Mvc.ViewModels.BloodRequests.BloodRequestDetailsVM
+
+<div class="modal-overlay">
+
+    <div class="request-modal">
+
+        <h4 class="fw-bold text-center mb-3">طلب دم</h4>
+        <hr />
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <p><strong>رقم الطلب:</strong> @Model.RequestNumber</p>
+                <p><strong>اسم المستفيد:</strong> @Model.PatientName</p>
+                <p><strong>المستشفى:</strong> @Model.Hospital</p>
+                <p><strong>الموعد المحدد:</strong> @Model.RequiredDate.ToShortDateString()</p>
+            </div>
+
+            <div class="col-md-6">
+                <p><strong>نوع الفصيلة:</strong> @Model.BloodGroup</p>
+                <p><strong>رقم الهاتف:</strong> @Model.PhoneNumber</p>
+                <p><strong>المرض:</strong> @Model.Disease</p>
+                <p><strong>النوع:</strong> @Model.Gender</p>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+
+            <form asp-action="Accept" method="post">
+
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <button type="submit" class="btn btn-success">
+                    قبول
+                </button>
+
+            </form>
+            <form asp-action="Delete" method="post">
+
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <button type="submit" class="btn btn-outline-danger">
+                    حذف
+                </button>
+
+            </form>
+
+            <a asp-action="Index"
+               class="btn btn-danger px-4">
+                إغلاق
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .modal-overlay{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.4);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:1000;
+    }
+
+    .request-modal{
+        background:#e8e2d8;
+        padding:35px;
+        width:700px;
+        border-radius:20px;
+    }
+
+</style>

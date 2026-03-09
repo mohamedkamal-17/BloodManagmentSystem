@@ -1,4 +1,6 @@
-﻿using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestesByBloodStatu;
+﻿using BloodManagment.Application.features.BloodRequestfeat.Queries.GetAllBloodRequests;
+using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestDetails;
+using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestesByBloodStatu;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloodGroup;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByUserId;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetUrgentRequests;
@@ -23,7 +25,7 @@ namespace BloodManagment.Infrastructure.Repositorise
 
         public async Task<IList<BloodRequest>> GetAllAsync()
         {
-            return await _dbset.ToListAsync();
+            return await ApplaySpacedication(new GetAllBloodRequestsQuerySpec()).ToListAsync();
         }
 
         public async Task<IList<BloodRequest>> GetByBloodGroupAsync(BloodGroup bloodGroup)
@@ -34,6 +36,11 @@ namespace BloodManagment.Infrastructure.Repositorise
         public Task<BloodRequest?> GetByHospitalsync(int hospitalId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<BloodRequest?> GetByIdAsync(int id)
+        {
+            return await ApplaySpacedication(new GetBloodRequestDetailsSpec(id)).FirstOrDefaultAsync();
         }
 
         public async Task<IList<BloodRequest>> GetByStatusAsync(RequestStatus status)

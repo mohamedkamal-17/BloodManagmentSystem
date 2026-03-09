@@ -2,7 +2,7 @@
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Queries.GetUrgentRequests
 {
-    public class GetUrgentBloodRequestsQuery : IRequest<List<UrgentBloodRequestsDto>>
+    public class GetUrgentBloodRequestsQuery : IRequest<List<BloodRequestDto>>
     {
     }
 }

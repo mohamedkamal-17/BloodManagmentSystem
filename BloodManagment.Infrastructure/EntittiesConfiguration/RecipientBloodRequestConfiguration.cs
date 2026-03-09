@@ -10,7 +10,7 @@ namespace BloodManagment.Infrastructure.EntittiesConfiguration
         {
             builder.Property(x => x.HospitalName).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Diagnosis).HasMaxLength(200);
-            builder.Property(x => x.Status).HasConversion<string>();
+
             builder.Property(x => x.Notes).HasMaxLength(500);
 
             builder.HasOne(x => x.Recipient)
