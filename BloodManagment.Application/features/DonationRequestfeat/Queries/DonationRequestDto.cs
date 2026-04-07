@@ -1,9 +1,10 @@
 ﻿using BloodManagment.domain.Entities;
 
-namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetDonationRequestById
+namespace BloodManagment.Application.features.DonationRequestfeat.Queries
 {
-    public class GetDonationRequestByIdDto
+    public class DonationRequestDto
     {
+        public int Id { get; set; }
         public string RequestCode { get; set; }
         public DateTime RequestDate { get; set; }
         public DateTime PreferredDonationDate { get; set; }

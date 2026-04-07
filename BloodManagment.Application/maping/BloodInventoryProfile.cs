@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BloodManagment.Application.features.BloodInventoryfeat.Queries.GetAllInentory;
+using BloodManagment.Application.features.BloodInventoryfeat.Queries;
 using BloodManagment.domain.Entities;
 
 namespace BloodManagment.Application.maping
@@ -8,7 +8,7 @@ namespace BloodManagment.Application.maping
     {
         public BloodInventoryProfile()
         {
-            CreateMap<BloodInventory, GettAllInentoriesDto>();
+            CreateMap<BloodInventory, BloodInentoriesDto>();
         }
     }
 }

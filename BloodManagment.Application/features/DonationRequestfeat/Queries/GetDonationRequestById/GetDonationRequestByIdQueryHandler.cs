@@ -4,7 +4,7 @@ using MediatR;
 
 namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetDonationRequestById
 {
-    public class GetDonationRequestByIdQueryHandler : IRequestHandler<GetDonationRequestByIdQuery, GetDonationRequestByIdDto>
+    public class GetDonationRequestByIdQueryHandler : IRequestHandler<GetDonationRequestByIdQuery, DonationRequestDetailsDto>
     {
         private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
@@ -15,10 +15,11 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetDon
             this.mapper = mapper;
         }
 
-        public async Task<GetDonationRequestByIdDto> Handle(GetDonationRequestByIdQuery request, CancellationToken cancellationToken)
+        public async Task<DonationRequestDetailsDto> Handle(GetDonationRequestByIdQuery request, CancellationToken cancellationToken)
         {
+
             var req = await unitOfWorke.DonationRequestRepository.GetByIdAsync(request.Id);
-            return mapper.Map<GetDonationRequestByIdDto>(req);
+            return mapper.Map<DonationRequestDetailsDto>(req);
         }
     }
 }

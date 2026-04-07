@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace BloodManagment.Application.features.BloodInventoryfeat.Queries.GetAllInentory
 {
-    internal class GettAllInentoriesQueryHandler : IRequestHandler<GettAllInentoriesQuery, ReadOnlyCollection<GettAllInentoriesDto>>
+    internal class GettAllInentoriesQueryHandler : IRequestHandler<GettAllInentoriesQuery, ReadOnlyCollection<BloodInentoriesDto>>
     {
         private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
@@ -18,10 +18,10 @@ namespace BloodManagment.Application.features.BloodInventoryfeat.Queries.GetAllI
 
 
 
-        public async Task<ReadOnlyCollection<GettAllInentoriesDto>> Handle(GettAllInentoriesQuery request, CancellationToken cancellationToken)
+        public async Task<ReadOnlyCollection<BloodInentoriesDto>> Handle(GettAllInentoriesQuery request, CancellationToken cancellationToken)
         {
             var inventories = await unitOfWorke.BloodInventoryRepository.GetAllAsync();
-            return mapper.Map<ReadOnlyCollection<GettAllInentoriesDto>>(inventories);
+            return mapper.Map<ReadOnlyCollection<BloodInentoriesDto>>(inventories);
 
         }
     }

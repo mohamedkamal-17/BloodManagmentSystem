@@ -1,0 +1,95 @@
+﻿@using BloodManagment.Mvc.ViewModels.DonationRequest
+@using BloodManagment.domain.Entities
+@model DonationRequestListViewModel
+
+@{
+    ViewData["Title"] = "طلبات التبرع";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h3 class="mb-4 text-end">طلبات التبرع</h3>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <table class="table table-bordered table-hover text-end bg-white">
+
+            <thead class="table-light">
+                <tr>
+                    <th>الكود</th>
+                    <th>المتبرع</th>
+                    <th>تاريخ الطلب</th>
+                    <th>موعد التبرع</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model.Requests)
+                {
+                    <tr>
+
+                        <td>
+                            <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="fw-bold text-decoration-none">
+                                @item.RequestCode
+                            </a>
+                        </td>
+
+                        <td>@item.DonarName</td>
+
+                        <td>@item.RequestDate.ToString("yyyy/MM/dd")</td>
+
+                        <td>@item.PreferredDonationDate.ToString("yyyy/MM/dd")</td>
+
+                        <td>
+
+                            @if (item.Statu == RequestStatus.Pending)
+                            {
+                                <span class="badge bg-warning text-dark">قيد المراجعة</span>
+                            }
+                            else if (item.Statu == RequestStatus.Accepted)
+                            {
+                                <span class="badge bg-success">مقبول</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">مرفوض</span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            @if (item.Statu == RequestStatus.Pending)
+                            {
+                                <a asp-action="Accept"
+                                   asp-route-code="@item.RequestCode"
+                                   class="btn btn-success btn-sm">
+                                    قبول
+                                </a>
+
+                                <a asp-action="Reject"
+                                   asp-route-code="@item.RequestCode"
+                                   class="btn btn-danger btn-sm">
+                                    رفض
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">تمت المعالجة</span>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

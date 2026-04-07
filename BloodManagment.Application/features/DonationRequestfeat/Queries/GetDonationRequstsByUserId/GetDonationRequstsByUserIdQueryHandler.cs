@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetDonationRequstsByUserId
 {
-    public class GetDonationRequstsByUserIdQueryHandler : IRequestHandler<GetDonationRequstsByUserIdQuery, ReadOnlyCollection<GetDonationRequstsByUserIdDto>>
+    public class GetDonationRequstsByUserIdQueryHandler : IRequestHandler<GetDonationRequstsByUserIdQuery, ReadOnlyCollection<DonationRequestDto>>
     {
         private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
@@ -15,7 +15,7 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetDon
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;
         }
-        public Task<ReadOnlyCollection<GetDonationRequstsByUserIdDto>> Handle(GetDonationRequstsByUserIdQuery request, CancellationToken cancellationToken)
+        public Task<ReadOnlyCollection<DonationRequestDto>> Handle(GetDonationRequstsByUserIdQuery request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

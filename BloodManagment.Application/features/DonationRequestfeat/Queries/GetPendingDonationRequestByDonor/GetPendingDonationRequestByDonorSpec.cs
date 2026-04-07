@@ -8,6 +8,7 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetPen
         public GetPendingDonationRequestByDonorSpec(int donorId) : base(x => x.Id == donorId
                          && x.Statu == RequestStatus.Pending)
         {
+            Includes.Add(dr => dr.Donar);
         }
     }
 }

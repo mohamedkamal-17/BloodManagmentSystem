@@ -19,6 +19,7 @@ namespace BloodManagment.Infrastructure.DataHelper
             modelBuilder.ApplyGlobalConfigurations();
 
         }
+        public DbSet<PasswordResetOtp> PasswordResetOtps { get; set; }
 
         // ==================== Blood & Requests ====================
         public DbSet<BloodUnit> BloodUnits { get; set; }

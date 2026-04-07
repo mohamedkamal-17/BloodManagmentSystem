@@ -1,15 +1,17 @@
 ﻿using BloodManagment.domain.Entities;
 
-namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetAllDonationRequestsBystatu
+namespace BloodManagment.Mvc.ViewModels.DonationRequest
 {
-    public class GetDonationRequestsByStatuDto
+    public class DonationRequestViewModel
     {
+        public int Id { get; set; }
         public string RequestCode { get; set; }
+
         public DateTime RequestDate { get; set; }
+
         public DateTime PreferredDonationDate { get; set; }
 
-
-        public RequestStatus Statu { get; set; } = RequestStatus.Pending;
+        public RequestStatus Statu { get; set; }
 
         public int HealthConditionId { get; set; }
 

@@ -8,6 +8,7 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetDon
         public GetDonationRequestByIdSpec(int id) : base(dr => dr.Id == id)
         {
             Includes.Add(dr => dr.Donar);
+            Includes.Add(re => re.HealthCondition);
 
         }
     }

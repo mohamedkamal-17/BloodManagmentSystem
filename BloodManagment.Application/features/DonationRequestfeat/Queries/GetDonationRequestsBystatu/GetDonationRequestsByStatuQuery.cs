@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetAllDonationRequestsBystatu
 {
-    public class GetDonationRequestsByStatuQuery : IRequest<ReadOnlyCollection<GetDonationRequestsByStatuDto>>
+    public class GetDonationRequestsByStatuQuery : IRequest<ReadOnlyCollection<DonationRequestDto>>
     {
         public RequestStatus Statu { get; set; }
     }

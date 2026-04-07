@@ -1,8 +1,10 @@
 ﻿using BloodManagment.Application.Commane;
+using BloodManagment.Application.features.Auth.Commandes.ResetPasswordWithOtp;
 using BloodManagment.domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using NETCore.MailKit.Core;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace BloodManagment.Application.features.Auth.Commandes.PasswordReset
 {
@@ -13,19 +15,20 @@ namespace BloodManagment.Application.features.Auth.Commandes.PasswordReset
         private readonly IOtpService _otpService;
         private readonly IUnitOfWork _unitOfWorke;
         private readonly IEmailService _emailService;
-
-
+        private readonly IMemoryCache memoryCache;
 
         public RequestPasswordResetOtpCommandHandler(
             UserManager<ApplicationUser> userManager,
             IOtpService otpService,
             IUnitOfWork unitOfWorke,
-            IEmailService emailService)
+            IEmailService emailService,
+            IMemoryCache memoryCache)
         {
             _userManager = userManager;
             _otpService = otpService;
             _unitOfWorke = unitOfWorke;
             _emailService = emailService;
+            this.memoryCache = memoryCache;
         }
 
         public async Task Handle(
@@ -37,21 +40,27 @@ namespace BloodManagment.Application.features.Auth.Commandes.PasswordReset
 
             var otp = _otpService.GenerateOtp();
 
-            var entity = new domain.Entities.PasswordResetOtp
+            var cacheKey = $"otp_{user.Id}";
+
+            var cacheValue = new OtpCacheModel
             {
-                UserId = user.Id,
                 OtpHash = _otpService.HashOtp(otp),
                 ExpireAt = DateTime.UtcNow.AddMinutes(5),
-                IsUsed = false
+
             };
 
-            await _unitOfWorke.PasswordResetOtpRepository.AddAsync(entity);
-            await _unitOfWorke.SaveChangesAsync();
+            var options = new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            };
+
+            memoryCache.Set(cacheKey, cacheValue, options);
 
             await _emailService.SendAsync(
-                user.Email!,
-                "Your password reset OTP",
-                $"Your OTP is: {otp} (valid for 5 minutes)");
+                    user.Email!,
+                    "Reset Password OTP",
+                    $"Your OTP is: {otp}"
+                );
         }
     }
 

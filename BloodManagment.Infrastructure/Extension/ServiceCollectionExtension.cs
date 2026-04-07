@@ -21,6 +21,10 @@ namespace BloodManagment.Infrastructure.Extension
             IConfiguration configuration
             )
         {
+            services.Configure<EmailSettings>(
+            configuration.GetSection("EmailSettings"));
+
+            services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IIdentityService, JwtProvider>();
 
             services.AddAuthentication(options =>

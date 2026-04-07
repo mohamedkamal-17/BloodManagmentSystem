@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using BloodManagment.Application.Commane;
 using MediatR;
-using System.Collections.ObjectModel;
 
 namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GettAllDonationRequests
 {
-    public class GetAllDonationRequestQueryHandler : IRequestHandler<GetAllDonationRequestQuery, ReadOnlyCollection<GetAllDonationRequestDto>>
+    public class GetAllDonationRequestQueryHandler : IRequestHandler<GetAllDonationRequestQuery, List<DonationRequestDto>>
     {
         private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
@@ -16,10 +15,10 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GettAl
             this.mapper = mapper;
         }
 
-        public async Task<ReadOnlyCollection<GetAllDonationRequestDto>> Handle(GetAllDonationRequestQuery request, CancellationToken cancellationToken)
+        public async Task<List<DonationRequestDto>> Handle(GetAllDonationRequestQuery request, CancellationToken cancellationToken)
         {
-            var requests = await unitOfWorke.BloodInventoryRepository.GetAllAsync();
-            return mapper.Map<ReadOnlyCollection<GetAllDonationRequestDto>>(requests);
+            var requests = await unitOfWorke.DonationRequestRepository.GetAllAsync();
+            return mapper.Map<List<DonationRequestDto>>(requests);
 
         }
     }

@@ -19,7 +19,7 @@ namespace BloodManagment.Application.features.Auth.Commandes.LoginUser
         {
             var user = new ApplicationUser
             {
-                UserName = request.Email,
+                UserName = request.FullName,
                 Email = request.Email,
                 FullName = request.FullName,
                 UserType = request.UserType

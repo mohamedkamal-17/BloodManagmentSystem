@@ -16,6 +16,11 @@ namespace BloodManagment.Infrastructure.Repositorise
             _donars = context.Set<Donar>();
         }
 
+        public Task<Donar?> GetByIdAsync(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Donar?> GetByUserIdAsync(string userId)
         {
             return await ApplaySpacedication(new GetByUserISpec(userId)).FirstOrDefaultAsync();

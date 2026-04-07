@@ -1,10 +1,9 @@
-﻿using BloodManagment.domain.Entities;
-using MediatR;
+﻿using MediatR;
 
 namespace BloodManagment.Application.features.BloodInventoryfeat.Queries.GetBloodInventoryById
 {
     public class GetBloodInventoryByIdQuery
-    : IRequest<BloodInventory>
+    : IRequest<BloodInentoriesDto>
     {
         public int Id { get; set; }
     }

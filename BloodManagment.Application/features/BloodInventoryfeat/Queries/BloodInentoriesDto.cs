@@ -1,8 +1,8 @@
 ﻿using BloodManagment.domain.Entities;
 
-namespace BloodManagment.Application.features.BloodInventoryfeat.Queries.GetAllInentory
+namespace BloodManagment.Application.features.BloodInventoryfeat.Queries
 {
-    public class GettAllInentoriesDto
+    public class BloodInentoriesDto
     {
         public int Quantity { get; set; }
 

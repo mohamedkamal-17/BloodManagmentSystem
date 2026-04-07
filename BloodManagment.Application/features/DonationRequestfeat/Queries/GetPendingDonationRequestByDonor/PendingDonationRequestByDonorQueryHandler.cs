@@ -4,7 +4,7 @@ using MediatR;
 
 namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetPendingDonationRequestByDonor
 {
-    public class PendingDonationRequestByDonorQueryHandler : IRequestHandler<PendingDonationRequestByDonorQuery, PendingDonationRequestByDonorDto>
+    public class PendingDonationRequestByDonorQueryHandler : IRequestHandler<PendingDonationRequestByDonorQuery, DonationRequestDto>
     {
         private readonly IUnitOfWork unitOfWorke;
         private readonly IMapper mapper;
@@ -14,11 +14,11 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Queries.GetPen
             this.unitOfWorke = unitOfWorke;
             this.mapper = mapper;
         }
-        public async Task<PendingDonationRequestByDonorDto> Handle(PendingDonationRequestByDonorQuery request, CancellationToken cancellationToken)
+        public async Task<DonationRequestDto> Handle(PendingDonationRequestByDonorQuery request, CancellationToken cancellationToken)
         {
             var pandingRequest = await unitOfWorke.DonationRequestRepository.GetPendingDonationRequestByDonor(request.DonorId);
 
-            return mapper.Map<PendingDonationRequestByDonorDto>(pandingRequest);
+            return mapper.Map<DonationRequestDto>(pandingRequest);
 
         }
     }

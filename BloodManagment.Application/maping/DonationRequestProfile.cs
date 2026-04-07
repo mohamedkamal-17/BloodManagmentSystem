@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using BloodManagment.Application.features.DonationRequestfeat.Queries.GetAllDonationRequestsBystatu;
+using BloodManagment.Application.features.DonationRequestfeat.Queries;
 using BloodManagment.Application.features.DonationRequestfeat.Queries.GetDonationRequestById;
-using BloodManagment.Application.features.DonationRequestfeat.Queries.GetDonationRequstsByUserId;
-using BloodManagment.Application.features.DonationRequestfeat.Queries.GetPendingDonationRequestByDonor;
-using BloodManagment.Application.features.DonationRequestfeat.Queries.GettAllDonationRequests;
 using BloodManagment.domain.Entities;
 
 namespace BloodManagment.Application.maping
@@ -13,18 +10,15 @@ namespace BloodManagment.Application.maping
         public DonationRequestProfile()
         {
             // CreateMap<Source, Destination>();
-            CreateMap<DonationRequest, GetAllDonationRequestDto>();
 
-            CreateMap<DonationRequest, GetDonationRequestByIdDto>();
-
-            CreateMap<DonationRequest, GetDonationRequestsByStatuDto>();
-
-
-            CreateMap<DonationRequest, GetDonationRequstsByUserIdDto>();
+            CreateMap<DonationRequest, DonationRequestDto>().ForMember(dest => dest.DonarName,
+                          opt => opt.MapFrom(src => src.Donar.FullName)); ;
+            CreateMap<DonationRequest, DonationRequestDetailsDto>()
+                .ForMember(dest => dest.DonarName,
+                         opt => opt.MapFrom(src => src.Donar.FullName)); ;
 
 
 
-            CreateMap<DonationRequest, PendingDonationRequestByDonorDto>();
 
         }
     }

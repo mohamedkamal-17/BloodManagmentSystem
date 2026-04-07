@@ -13,6 +13,7 @@ namespace BloodManagment.Application.Extension
             this IServiceCollection services
             )
         {
+            services.AddMemoryCache();
             services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

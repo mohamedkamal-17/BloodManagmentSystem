@@ -5,7 +5,6 @@ using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnem
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestsByBloodGroup;
 using BloodManagment.domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloodManagment.Api.Contrrollers
@@ -26,7 +25,7 @@ namespace BloodManagment.Api.Contrrollers
         // 1️⃣ Create Anemia Blood Request
         // =====================================================
         [HttpPost]
-        [Authorize] // optional depending on your system
+        // [Authorize] // optional depending on your system
         public async Task<IActionResult> Create(
             [FromBody] CreateAnemiaBloodRequestCommand command,
             CancellationToken cancellationToken)
@@ -43,7 +42,7 @@ namespace BloodManagment.Api.Contrrollers
         // 2️⃣ Get All Anemia Blood Requests
         // =====================================================
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetAll(
             CancellationToken cancellationToken)
         {
@@ -58,7 +57,7 @@ namespace BloodManagment.Api.Contrrollers
         // 3️⃣ Get By Status
         // =====================================================
         [HttpGet("status/{status}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetByStatus(
             [FromRoute] RequestStatus status,
             CancellationToken cancellationToken)
@@ -77,7 +76,7 @@ namespace BloodManagment.Api.Contrrollers
         // 4️⃣ Get By UserId
         // =====================================================
         [HttpGet("user/{userId:int}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetByUserId(
             [FromRoute] int userId,
             CancellationToken cancellationToken)
@@ -96,7 +95,7 @@ namespace BloodManagment.Api.Contrrollers
         // 5️⃣ Get By BloodGroup
         // =====================================================
         [HttpGet("blood-group/{bloodGroup}")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetByBloodGroup(
             [FromRoute] BloodGroup bloodGroup,
             CancellationToken cancellationToken)

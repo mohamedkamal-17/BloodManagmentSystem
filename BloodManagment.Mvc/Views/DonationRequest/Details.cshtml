@@ -1,0 +1,153 @@
+﻿@using BloodManagment.Mvc.ViewModels.DonationRequest
+@model DonationRequestDetailsViewModel
+
+@{
+    ViewData["Title"] = "تفاصيل طلب التبرع";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h3 class="mb-4 text-end">تفاصيل طلب التبرع</h3>
+
+<div class="row">
+
+    <!-- Request Info -->
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm">
+            <div class="card-body text-end">
+
+                <h5 class="mb-3">معلومات الطلب</h5>
+
+                <div class="mb-2">
+                    <strong>كود الطلب:</strong>
+                    @Model.RequestCode
+                </div>
+
+                <div class="mb-2">
+                    <strong>اسم المتبرع:</strong>
+                    @Model.DonarName
+                </div>
+
+                <div class="mb-2">
+                    <strong>تاريخ الطلب:</strong>
+                    @Model.RequestDate.ToString("yyyy/MM/dd")
+                </div>
+
+                <div class="mb-2">
+                    <strong>موعد التبرع:</strong>
+                    @Model.PreferredDonationDate.ToString("yyyy/MM/dd")
+                </div>
+
+                <div class="mb-2">
+                    <strong>الحالة:</strong>
+                    @Model.Statu
+                </div>
+
+            </div>
+        </div>
+         
+    </div>
+
+
+    <!-- Health Condition -->
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm">
+            <div class="card-body text-end">
+
+                <h5 class="mb-3">الحالة الصحية</h5>
+                <ul class="list-group">
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        فقر الدم
+                        <span class="badge @(Model.HealthCondition.HasAnemia ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasAnemia ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        الصفراء
+                        <span class="badge @(Model.HealthCondition.HasJaundice ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasJaundice ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        أمراض القلب
+                        <span class="badge @(Model.HealthCondition.HasHeartDisease ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasHeartDisease ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        السرطان
+                        <span class="badge @(Model.HealthCondition.HasCancer ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasCancer ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        السكري
+                        <span class="badge @(Model.HealthCondition.HasDiabetes ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasDiabetes ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        الإيدز
+                        <span class="badge @(Model.HealthCondition.HasAIDS ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasAIDS ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        نزلات البرد
+                        <span class="badge @(Model.HealthCondition.HasCold ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasCold ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        الحمل
+                        <span class="badge @(Model.HealthCondition.IsPregnant ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.IsPregnant ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        أمراض جلدية
+                        <span class="badge @(Model.HealthCondition.HasSkinDisease ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasSkinDisease ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        مشاكل ضغط الدم
+                        <span class="badge @(Model.HealthCondition.HasBloodPressureIssue ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasBloodPressureIssue ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        عملية جراحية حديثة
+                        <span class="badge @(Model.HealthCondition.HasRecentSurgery ? "bg-danger" : "bg-success")">
+                            @(Model.HealthCondition.HasRecentSurgery ? "✔ Yes" : "✖ No")
+                        </span>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<a asp-action="Index" class="btn btn-secondary">
+    رجوع
+</a>

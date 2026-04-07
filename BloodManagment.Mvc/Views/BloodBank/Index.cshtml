@@ -1,0 +1,153 @@
+﻿@using BloodManagment.Mvc.ViewModels.BloodInvintory
+@using BloodManagment.domain.Entities
+@model BloodInventoryViewModel
+
+
+
+    
+
+@{
+    ViewData["Title"] = "بنك الدم";
+    Layout = "_DashboardLayout";
+}
+
+
+
+
+<style>
+    body {
+        font-family: 'Cairo', sans-serif;
+    }
+
+    .page-title {
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+
+    .blood-card {
+        background: #e8e2d8;
+        border-radius: 25px;
+        padding: 25px;
+        height: 100%;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        transition: 0.3s;
+    }
+
+        .blood-card:hover {
+            transform: translateY(-6px);
+        }
+
+    .blood-type {
+        text-align: center;
+        font-size: 34px;
+        font-weight: 800;
+        color: #dc3545;
+        margin-bottom: 15px;
+    }
+
+    .curve {
+        width: 130px;
+        height: 65px;
+        border-bottom: 3px solid #dc3545;
+        border-radius: 0 0 120px 120px;
+        margin: 10px auto 20px;
+    }
+
+    .card-content {
+        direction: rtl;
+        font-size: 16px;
+    }
+
+    .row-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+
+    .label {
+        color: #444;
+        font-weight: 600;
+    }
+
+    .value {
+        color: #555;
+    }
+
+    .status-available {
+        color: #28a745;
+        font-weight: bold;
+    }
+
+    .status-low {
+        color: #e0a800;
+        font-weight: bold;
+    }
+
+    .status-critical {
+        color: #dc3545;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container-fluid">
+
+    <h3 class="page-title">بنك الدم</h3>
+
+    <div class="row g-4">
+
+        @foreach (var item in Model.Inventories)
+        {
+            var statusClass = item.Status == InventoryStatus.Normal
+            ? "status-available"
+            : item.Status == InventoryStatus.Low
+            ? "status-low"
+            : "status-critical";
+
+            var statusText = item.Status == InventoryStatus.Normal
+            ? "متاح"
+            : item.Status == InventoryStatus.Low
+            ? "منخفض"
+            : "نادر";
+
+            <div class="col-md-4">
+                <div class="blood-card">
+
+                    <!-- Blood Group -->
+                    <div class="blood-type">
+                        @item.BloodGroup
+                        <div class="curve"></div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="card-content">
+
+                        <div class="row-item">
+                            <span class="label">الحالة:</span>
+                            <span class="value @statusClass">@statusText</span>
+                        </div>
+
+                        <div class="row-item">
+                            <span class="label">الكمية:</span>
+                            <span class="value">@item.Quantity</span>
+                        </div>
+
+                        <div class="row-item">
+                            <span class="label">آخر تحديث:</span>
+                            <span class="value">02/10/2025</span>
+                        </div>
+
+                        <div class="row-item">
+                            <span class="label">آخر تبرع:</span>
+                            <span class="value">02/10/2025</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>

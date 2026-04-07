@@ -1,4 +1,5 @@
 ﻿using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByStatu;
+using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByUserId;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestsByBloodGroup;
 using BloodManagment.domain.Contracts.Repositorise;
 using BloodManagment.domain.Entities;
@@ -34,9 +35,9 @@ namespace BloodManagment.Infrastructure.Repositorise
             return await ApplaySpacedication(new GetAnemiaBloodRequestByStatuSpc(status)).ToListAsync();
         }
 
-        public Task<IList<AnemiaBloodRequest>> GetByUserIdAsync(int userID)
+        public async Task<IList<AnemiaBloodRequest>> GetByUserIdAsync(int userID)
         {
-            throw new NotImplementedException();
+            return await ApplaySpacedication(new GetAnemiaBloodRequestByUserIdSpc(userID)).ToListAsync();
         }
     }
 
