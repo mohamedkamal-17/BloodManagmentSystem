@@ -18,6 +18,8 @@ namespace BloodManagment.Application.Commane
 
         IRecipientRepository RecipientRepository { get; }
         ILabTechnicianRepository LabTechnicianRepository { get; }
+        IThalassemiaPatientDonorAssignementRepository ThalassemiaPatientDonorAssignementRepository { get; }
+
 
         Task<int> SaveChangesAsync();
 

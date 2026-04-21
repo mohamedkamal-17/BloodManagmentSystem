@@ -1,5 +1,6 @@
 ﻿using BloodManagment.Application.features.Donarfeat.Commandes.CreateDonor;
 using BloodManagment.Application.features.Donarfeat.Queries.GetByUserId;
+using BloodManagment.Application.features.Donarfeat.Queries.PredictDonor;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,21 @@ public class DonorsController : ControllerBase
     public DonorsController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+    [HttpGet("predict-donor/{donorId}")]
+    public async Task<IActionResult> PredictDonor(int donorId)
+    {
+        var result = await _mediator.Send(new PredictDonorByIdQuery
+        {
+            DonorId = donorId
+        });
+
+        return Ok(result);
+
+        //        < a href = "/api/yourcontroller/predict-donor/@donor.Id"
+        //   class="btn btn-sm btn-outline-success">
+        //   🔮 توقع
+        //</a>
     }
 
     // =============================

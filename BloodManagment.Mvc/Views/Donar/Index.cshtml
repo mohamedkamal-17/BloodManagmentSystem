@@ -1,0 +1,155 @@
+﻿@using BloodManagment.Application.features.Donarfeat.Queries
+@model List<DonarVm>
+
+@{
+    ViewData["Title"] = "المتبرعين";
+    Layout = "_DashboardLayout";
+}
+<style>
+    .table-card {
+        background: linear-gradient(145deg, #f3f0ea, #ffffff);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    /* Table */
+    .table thead th {
+        font-size: 13px;
+        color: #777;
+        font-weight: 600;
+    }
+
+    /* Rows */
+    .table tbody tr {
+        transition: 0.2s;
+    }
+
+        .table tbody tr:hover {
+            background: #fff5f5;
+            transform: scale(1.01);
+        }
+
+    /* Blood */
+    .blood {
+        color: #e53935;
+        font-weight: bold;
+    }
+
+    /* Status */
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+        .status-badge.eligible {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.not-eligible {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+    /* Actions */
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+        .actions .btn {
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+            .actions .btn:hover {
+                transform: scale(1.1);
+            }</style>
+
+<div class="table-card">
+
+    <h4 class="mb-3">🧑‍🤝‍🧑 قائمة المتبرعين</h4>
+
+    <table class="table text-center align-middle">
+
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>الاسم</th>
+                <th>الكود</th>
+                <th>الفصيلة</th>
+                <th>الجنس</th>
+                <th>آخر تبرع</th>
+                <th>التبرعات</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Id</td>
+
+                    <td class="fw-bold">@item.FullName</td>
+
+                    <td>@item.DonarCode</td>
+
+                    <td class="blood">@item.BloodGroup</td>
+
+                    <td>@item.Gender</td>
+
+                    <td>
+                        @(item.LastDonationDate.HasValue
+                            ? item.LastDonationDate.Value.ToString("yyyy-MM-dd")
+                            : "-")
+                    </td>
+
+                    <td>@item.DonationCount</td>
+
+                    <td>
+                        <span class="status-badge @(item.IsEilgibleToDonate ? "eligible" : "not-eligible")">
+                            @(item.IsEilgibleToDonate ? "مؤهل" : "غير مؤهل")
+                        </span>
+                    </td>
+
+                    <td class="actions">
+
+                        <!-- 🔮 Predict -->
+                        <a asp-controller="Donar"
+                           asp-action="Predict"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-success">
+                            🔮
+                        </a>
+
+                        <!-- ✏️ Edit -->
+                        <a asp-controller="Donar"
+                           asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-primary">
+                            ✏️
+                        </a>
+
+                        <!-- 🗑 Delete -->
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                🗑
+                            </button>
+                        </form>
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

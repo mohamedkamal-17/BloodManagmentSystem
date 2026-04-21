@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BloodManagment.Application.features.DonationPredictionService;
+using Microsoft.Extensions.DependencyInjection;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using System.Reflection;
@@ -13,6 +14,13 @@ namespace BloodManagment.Application.Extension
             this IServiceCollection services
             )
         {
+            services.AddScoped<IDonationPredictionService, DonationPredictionService>();
+
+            services.AddHttpClient<IDonationPredictionService, DonationPredictionService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:8000"); // FastAPI URL
+            });
+
             services.AddMemoryCache();
             services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

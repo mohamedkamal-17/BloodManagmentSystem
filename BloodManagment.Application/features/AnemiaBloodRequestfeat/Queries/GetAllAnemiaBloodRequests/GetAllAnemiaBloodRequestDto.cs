@@ -4,7 +4,7 @@ namespace BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.Get
 {
     public class GetAllAnemiaBloodRequestDto
     {
-
+        public int Id {  get; set; }
         public string RequestCode { get; set; }
         public DateTime RequestDate { get; set; }
 

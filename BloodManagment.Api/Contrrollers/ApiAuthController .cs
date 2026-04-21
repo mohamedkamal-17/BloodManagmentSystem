@@ -2,6 +2,7 @@
 using BloodManagment.Application.features.Auth.Commandes.LoginUser;
 using BloodManagment.Application.features.Auth.Commandes.PasswordReset;
 using BloodManagment.Application.features.Auth.Commandes.ResetPasswordWithOtp;
+using BloodManagment.Application.features.Auth.Commandes.VerifyOtp;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,10 +47,10 @@ namespace BloodManagment.Api.Contrrollers
 
         [HttpPost("forgot-password-otp")]
         [AllowAnonymous]
-        public async Task<IActionResult> RequestOtp([FromBody] string email)
+        public async Task<IActionResult> RequestOtp(RequestPasswordResetOtpCommand requestPasswordResetOtpCommand)
         {
             await _mediator.Send(
-                new RequestPasswordResetOtpCommand { Email = email });
+               requestPasswordResetOtpCommand);
 
             return Ok(new
             {
@@ -65,8 +66,21 @@ namespace BloodManagment.Api.Contrrollers
             await _mediator.Send(command);
             return Ok(new { message = "Password reset successful" });
         }
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOtp(VerifyOtpCommand verifyOtpCommand)
+        {
+
+            var result = await _mediator.Send(verifyOtpCommand);
+
+            return Ok(new
+            {
+                success = true,
+                message = "OTP verified successfully"
+            });
 
 
+
+        }
     }
 
 }

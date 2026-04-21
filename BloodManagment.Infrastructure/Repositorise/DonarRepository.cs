@@ -15,10 +15,18 @@ namespace BloodManagment.Infrastructure.Repositorise
         {
             _donars = context.Set<Donar>();
         }
-
-        public Task<Donar?> GetByIdAsync(int userId)
+        public async Task<IReadOnlyList<Donar>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _donars
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<Donar?> GetByIdAsync(int userId)
+        {
+            return await _donars
+
+                .FirstOrDefaultAsync(x => x.Id == userId);
         }
 
         public async Task<Donar?> GetByUserIdAsync(string userId)

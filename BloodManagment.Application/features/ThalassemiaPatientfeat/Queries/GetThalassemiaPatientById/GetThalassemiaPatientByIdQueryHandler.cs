@@ -36,7 +36,7 @@ namespace BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.Get
                 LastTransfusionDate = patient.LastTransfusionDate,
                 NextTransfusionDate = patient.NextTransfusionDate,
                 HospitalName = patient.Hospital?.Name ?? "",
-                UserFullName = patient.User?.FullName ?? ""
+                //FullName = patient.User?.FullName ?? ""
             };
         }
     }

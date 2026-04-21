@@ -8,6 +8,7 @@ using BloodManagment.Infrastructure.DataHelper;
 using BloodManagment.Infrastructure.Repositoris;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace BloodManagment.Infrastructure.Repositorise
 {
     public class ThalassemiaPatientRepository : GenericRepository<ThalassemiaPatient>, IThalassemiaPatientRepository
@@ -24,6 +25,7 @@ namespace BloodManagment.Infrastructure.Repositorise
             return await ApplaySpacedication(
                     new GetAllThalassemiaPatientsSpec())
                 .AsNoTracking()
+
                 .ToListAsync();
         }
 
@@ -42,6 +44,9 @@ namespace BloodManagment.Infrastructure.Repositorise
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+
+
 
 
 

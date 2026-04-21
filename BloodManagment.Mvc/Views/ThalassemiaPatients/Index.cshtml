@@ -1,0 +1,261 @@
+﻿@using BloodManagment.Application.features.ThalassemiaPatientfeat
+@model IList<ThalassemiaPatientDto>
+
+@{
+    ViewData["Title"] = "مرضى الثلاسيميا";
+    Layout = "_DashboardLayout";
+}
+
+<style>
+
+    /* 🌍 Scope */
+    .thalassemia-page {
+        font-family: 'Cairo', sans-serif;
+    }
+
+    /* 📦 Card */
+    .table-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    /* Header */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    /* Table */
+    .table thead th {
+        font-size: 13px;
+        color: #888;
+        font-weight: 600;
+        border-bottom: 2px solid #eee;
+        padding: 14px;
+    }
+
+    .table td {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    /* Hover */
+    .table tbody tr {
+        transition: 0.2s;
+    }
+
+        .table tbody tr:hover {
+            background: #fff6f6;
+            transform: scale(1.01);
+        }
+
+    /* Blood */
+    .blood {
+        color: #d32f2f;
+        font-weight: bold;
+    }
+
+    /* Urgent */
+    .urgent {
+        background: #d32f2f;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+
+    /* Actions */
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+    }
+
+        .actions .btn {
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+    .btn-outline-success:hover {
+        background: #2e7d32;
+        color: #fff;
+    }
+
+    .btn-outline-primary:hover {
+        background: #1565c0;
+        color: #fff;
+    }
+
+    .btn-outline-danger:hover {
+        background: #c62828;
+        color: #fff;
+    }
+
+    .btn-outline-info:hover {
+        background: #0288d1;
+        color: #fff;
+    }
+
+    /* 📱 Responsive */
+    @@media (max-width: 768px) {
+
+        .table thead {
+            display: none;
+        }
+
+        .table,
+        .table tbody,
+        .table tr,
+        .table td {
+            display: block;
+            width: 100%;
+        }
+
+            .table tr {
+                margin-bottom: 12px;
+                background: #fafafa;
+                border-radius: 12px;
+                padding: 10px;
+            }
+
+            .table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px;
+                border-bottom: 1px solid #eee;
+            }
+
+                .table td:last-child {
+                    border-bottom: none;
+                }
+
+                .table td::before {
+                    content: attr(data-label);
+                    font-weight: bold;
+                    color: #888;
+                }
+
+        .actions {
+            justify-content: flex-start;
+        }
+    }
+
+</style>
+
+<div class="thalassemia-page">
+
+    <div class="table-card">
+
+        <div class="header">
+            <h4>🩸 مرضى الثلاسيميا</h4>
+
+            <a asp-action="Create" class="btn btn-danger">
+                ➕ إضافة مريض
+            </a>
+        </div>
+
+        <table class="table text-center align-middle">
+
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>الاسم</th>
+                    <th>المستشفى</th>
+                    <th>الفصيلة</th>
+                    <th>آخر نقل دم</th>
+                    <th>القادم</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td data-label="#">@item.Id</td>
+@* 
+                            <td data-label="الاسم" class="fw-bold">
+                                @(item.FullName ?? "-")
+                            </td> *@
+
+                            <td data-label="المستشفى">
+                                @(string.IsNullOrEmpty(item.HospitalName) ? "-" : item.HospitalName)
+                            </td>
+
+                            <td data-label="الفصيلة" class="blood">
+                                @item.BloodGroup
+                            </td>
+
+                            <td data-label="آخر نقل">
+                                @(item.LastTransfusionDate != default
+                                    ? item.LastTransfusionDate.ToString("yyyy-MM-dd")
+                                    : "-")
+                            </td>
+
+                            <td data-label="القادم">
+                                <span class="@(item.NextTransfusionDate != default && item.NextTransfusionDate < DateTime.Now ? "urgent" : "")">
+                                    @(item.NextTransfusionDate != default
+                                        ? item.NextTransfusionDate.ToString("yyyy-MM-dd")
+                                        : "-")
+                                </span>
+                            </td>
+
+                            <td data-label="الإجراءات" class="actions">
+
+                                <!-- 🧠 Assign Donor -->
+                                <a asp-controller="AnemiaBloodRequest"
+                                   asp-action="Assign"
+                                   asp-route-requestId="@item.Id"
+                                   class="btn btn-sm btn-outline-success">
+                                    🩸
+                                </a>
+
+                                <!-- 👁 Details -->
+                                <a asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-info">
+                                    👁
+                                </a>
+
+                                <!-- ✏️ Edit -->
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-primary">
+                                    ✏️
+                                </a>
+
+                                <!-- 🗑 Delete -->
+                                <form asp-action="Delete" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        🗑
+                                    </button>
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">لا يوجد بيانات</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

@@ -1,0 +1,79 @@
+﻿@using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAssignScreenData
+@model AssignScreenVm
+
+<div class="modal fade" id="assignModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content assign-modal">
+
+            <div class="modal-header">
+                <h5>تعيين متبرع</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- 🧾 Request Info -->
+                <div class="request-info">
+                    <p><b>رقم الطلب:</b> @Model.RequestCode</p>
+                    <p><b>الفصيلة:</b> <span class="blood">@Model.BloodGroup</span></p>
+                    <p><b>المستشفى:</b> @Model.Hospital</p>
+                </div>
+
+                <hr />
+
+                <!-- 🧑‍🤝‍🧑 Donors -->
+                <div class="donor-list">
+                    @foreach (var donor in Model.Donors)
+                    {
+                        <div class="donor-card">
+                            <input type="radio" name="donorId" value="@donor.Id" />
+
+                            <div>
+                                <h6>@donor.Name</h6>
+                                <small>@donor.BloodGroup</small><br />
+                                <small>آخر تبرع: @donor.LastDonationDate</small>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger assign-confirm"
+                        data-request-id="@Model.RequestId">
+                    تأكيد التعيين
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    .assign-modal {
+        border-radius: 20px;
+        background: #f3f0ea;
+    }
+
+    .donor-card {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 12px;
+        background: #fff;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .donor-card:hover {
+            background: #ffeaea;
+        }
+
+    .blood {
+        color: #e53935;
+        font-weight: bold;
+    }
+</style>
+
+</script>

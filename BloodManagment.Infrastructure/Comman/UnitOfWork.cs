@@ -26,8 +26,7 @@ namespace BloodManagment.Infrastructure.Comman
 
         private IRecipientRepository recipientRepository;
         private ILabTechnicianRepository labTechnicianRepository;
-
-
+        private IThalassemiaPatientDonorAssignementRepository thalassemiaPatientDonorAssignementRepository;
         public UnitOfWork(ApplicationContext context)
         {
             this.context = context;
@@ -67,7 +66,8 @@ namespace BloodManagment.Infrastructure.Comman
         public ILabTechnicianRepository LabTechnicianRepository =>
             labTechnicianRepository ??= new LabTechnicianRepository(context);
 
-
+        public IThalassemiaPatientDonorAssignementRepository ThalassemiaPatientDonorAssignementRepository =>
+            thalassemiaPatientDonorAssignementRepository ??= new ThalassemiaPatientDonorAssignementRepository(context);
         public void Dispose()
         {
             context.Dispose();

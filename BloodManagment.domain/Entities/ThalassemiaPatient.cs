@@ -11,7 +11,7 @@ namespace BloodManagment.domain.Entities
         public BloodGroup BloodGroup { get; set; }
         public int HospitalId { get; set; }
         public Hospital Hospital { get; set; }
-
+        // public string FullName { get; set; }
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }

@@ -1,9 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Rendering
 @{
     var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
-    var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
 }
-
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -16,39 +14,101 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        body{
-            font-family:'Cairo', sans-serif;
-            background:#f5f5f5;
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f5f5f5;
         }
 
-        .sidebar{
-            width:260px;
-            height:100vh;
-            position:fixed;
-            right:0;
-            background:#e8e2d8;
-            padding:25px;
+        /* 🧭 Sidebar */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            right: 0;
+            background: #e8e2d8;
+            padding: 25px;
         }
 
-        .sidebar a{
-            display:block;
-            padding:12px;
-            margin-bottom:10px;
-            border-radius:12px;
-            text-decoration:none;
-            color:#333;
-            background:#dcd6cb;
+            /* Links */
+            .sidebar a {
+                display: block;
+                padding: 12px;
+                margin-bottom: 8px;
+                border-radius: 12px;
+                text-decoration: none;
+                color: #333;
+                background: #dcd6cb;
+                transition: 0.25s;
+            }
+
+                .sidebar a:hover {
+                    background: #ffeaea;
+                    color: #e53935;
+                }
+
+                .sidebar a.active {
+                    background: #dc3545;
+                    color: white;
+                }
+
+        /* Content */
+        .content {
+            margin-right: 280px;
+            padding: 30px;
         }
 
-        .sidebar a.active{
-            background:#dc3545;
-            color:white;
+        /* 🔽 Dropdown */
+        .sidebar-dropdown {
+            margin-bottom: 10px;
         }
 
-        .content{
-            margin-right:280px;
-            padding:30px;
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-radius: 12px;
+            background: #dcd6cb;
+            cursor: pointer;
+            transition: 0.25s;
         }
+
+            .dropdown-header:hover {
+                background: #ffeaea;
+                color: #e53935;
+            }
+
+        /* Arrow */
+        .arrow {
+            transition: 0.3s;
+        }
+
+        .sidebar-dropdown.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Items */
+        .dropdown-items {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .sidebar-dropdown.open .dropdown-items {
+            max-height: 300px;
+        }
+
+        .dropdown-items a {
+            font-size: 14px;
+            padding: 8px 15px;
+            background: transparent;
+        }
+
+            .dropdown-items a.active {
+                background: #dc3545;
+                color: white;
+            }
+
     </style>
 </head>
 
@@ -68,13 +128,42 @@
             طلبات الدم
         </a>
 
-        <a asp-controller="User" asp-action="Index"
-           class="@(currentController=="User" ? "active" : "")">
-            المستخدمين
-        </a>
+        <!-- 🔥 SMART DROPDOWN -->
+        <div class="sidebar-dropdown @(currentController=="Donar" || currentController=="Recipient" || currentController=="AnemiaPatient" ? "open" : "")">
+
+            <div class="dropdown-header" onclick="toggleDropdown(this)">
+                <span>المستخدمين</span>
+                <span class="arrow">▼</span>
+            </div>
+
+            <div class="dropdown-items">
+
+                <a asp-controller="Donar" asp-action="Index"
+                   class="@(currentController=="Donar" ? "active" : "")">
+                    🧑 المتبرعين
+                </a>
+
+                <a asp-controller="ThalassemiaPatients" asp-action="Index"
+                   class="@(currentController=="   ThalassemiaPatients " ? "active" : "")">
+                    🩸 مرضى الانيميا
+                </a>
+
+                <a asp-controller="Recipient" asp-action="Index"
+                   class="@(currentController=="Recipient" ? "active" : "")">
+                    🏥 طالبي الدم
+                </a>
+
+            </div>
+        </div>
+
         <a asp-controller="DonationRequest" asp-action="Index"
            class="@(currentController=="DonationRequest" ? "active" : "")">
             طلبات التبرع
+        </a>
+
+        <a asp-controller="AnemiaBloodRequest" asp-action="Index"
+           class="@(currentController=="AnemiaBloodRequest" ? "active" : "")">
+            طلبات الانميا
         </a>
 
         <a asp-controller="BloodBank" asp-action="Index"
@@ -93,6 +182,14 @@
     <div class="content">
         @RenderBody()
     </div>
+
+    <!-- ⚡ Tiny JS (Safe & Clean) -->
+    <script>
+        function toggleDropdown(el) {
+            const parent = el.parentElement;
+            parent.classList.toggle("open");
+        }
+    </script>
 
 </body>
 </html>

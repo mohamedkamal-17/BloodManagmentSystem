@@ -1,10 +1,9 @@
-﻿using BloodManagment.domain.Entities;
-using MediatR;
+﻿using MediatR;
 
 namespace BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.GetAllThalassemiaPatients
 {
     public class GetAllThalassemiaPatientsQuery
-    : IRequest<IList<ThalassemiaPatient>>
+    : IRequest<IList<ThalassemiaPatientDto>>
     {
     }
 }

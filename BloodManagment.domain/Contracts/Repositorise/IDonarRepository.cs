@@ -10,6 +10,7 @@ namespace BloodManagment.domain.Contracts.Repositorise
 
         Task<List<Donar>> GetTopDonarAsync();
         Task<int> GetCountAsync();
+        Task<IReadOnlyList<Donar>> GetAllAsync();
 
     }
 }

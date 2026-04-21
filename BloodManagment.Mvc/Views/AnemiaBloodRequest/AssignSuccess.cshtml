@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "_DashboardLayout";
+}
+
+<div class="success-overlay">
+
+    <div class="success-modal">
+
+        <div class="success-icon">✔</div>
+
+        <h4>تم تعيين المتبرع بنجاح</h4>
+
+        <p>يمكنك المتابعة أو العودة</p>
+
+        <div class="actions">
+
+            <!-- 🔙 Exit -->
+            <a asp-action="Index" class="btn btn-secondary">
+                خروج
+            </a>
+
+            <!-- 🔁 Assign again -->
+            <a asp-action="Assign"
+               asp-route-requestId="@ViewBag.RequestId"
+               class="btn btn-danger">
+                تعيين متبرع اخر
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    /* 🌑 Dark overlay */
+    .success-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    /* 🪟 Floating card */
+    .success-modal {
+        background: #f3f0ea;
+        padding: 40px;
+        border-radius: 20px;
+        width: 400px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    /* ✅ Icon */
+    .success-icon {
+        font-size: 50px;
+        color: #28a745;
+        margin-bottom: 15px;
+    }
+
+    /* 🔘 Buttons */
+    .success-modal .actions {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .success-modal .btn {
+        padding: 10px 20px;
+        border-radius: 12px;
+    }
+</style>

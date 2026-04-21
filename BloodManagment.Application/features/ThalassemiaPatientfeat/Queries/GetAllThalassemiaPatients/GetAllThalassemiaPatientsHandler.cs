@@ -1,11 +1,10 @@
 ﻿using BloodManagment.Application.Commane;
-using BloodManagment.domain.Entities;
 using MediatR;
 
 namespace BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.GetAllThalassemiaPatients
 {
     public class GetAllThalassemiaPatientsHandler
-    : IRequestHandler<GetAllThalassemiaPatientsQuery, IList<ThalassemiaPatient>>
+      : IRequestHandler<GetAllThalassemiaPatientsQuery, IList<ThalassemiaPatientDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -14,13 +13,28 @@ namespace BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.Get
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IList<ThalassemiaPatient>> Handle(
+        public async Task<IList<ThalassemiaPatientDto>> Handle(
             GetAllThalassemiaPatientsQuery request,
             CancellationToken cancellationToken)
         {
-            return await _unitOfWork
+            var patients = await _unitOfWork
                 .ThalassemiaPatientRepository
                 .GetAllAsync();
+
+            return patients.Select(p => new ThalassemiaPatientDto
+            {
+                Id = p.Id,
+                DiagnosisDate = p.DiagnosisDate,
+                LastTransfusionDate = p.LastTransfusionDate,
+                NextTransfusionDate = p.NextTransfusionDate,
+                BloodGroup = p.BloodGroup,
+
+                HospitalId = p.HospitalId,
+                HospitalName = p.Hospital != null ? p.Hospital.Name : "—",
+
+                //  FullName = p.FullName
+            }).ToList();
         }
     }
 }
+

@@ -1,0 +1,142 @@
+﻿@using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAssignScreenData
+@model AssignScreenVm
+@{
+    Layout = "_DashboardLayout";
+}
+
+<!-- 🌑 Overlay -->
+<div class="assign-overlay">
+
+    <!-- 🪟 Floating Card -->
+    <div class="assign-modal">
+
+        <h3 class="mb-4 text-center">تعيين متبرع</h3>
+
+        <!-- 🧾 Request Info -->
+        <div class="info-box">
+            <p><b>رقم الطلب:</b> @Model.RequestCode</p>
+            <p><b>الفصيلة:</b> <span class="blood">@Model.BloodGroup</span></p>
+            <p><b>المستشفى:</b> @Model.Hospital</p>
+        </div>
+
+        <!-- 🧑‍🤝‍🧑 Form -->
+        <form asp-action="Assign" method="post">
+
+            <!-- Hidden -->
+            <input type="hidden" name="ThalassemiaPatientId" value="@Model.PatientId" />
+
+            <div class="donor-box">
+                <h5 class="mb-3">اختر المتبرع</h5>
+
+                @foreach (var donor in Model.Donors)
+                {
+                    <label class="donor-card">
+                        <input type="radio"
+                               name="DonarId"
+                               value="@donor.Id"
+                               required />
+
+                        <div>
+                            <strong>@donor.Name</strong><br />
+                            <span>@donor.BloodGroup</span><br />
+                            <small>آخر تبرع: @donor.LastDonationDate</small>
+                        </div>
+                    </label>
+                }
+            </div>
+
+            <div class="actions mt-4">
+                <button type="submit" class="btn btn-danger">
+                    تأكيد التعيين
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    رجوع
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<style>
+    /* 🌑 Full screen overlay */
+    .assign-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    /* 🪟 Floating modal */
+    .assign-modal {
+        width: 600px;
+        max-height: 90vh;
+        overflow-y: auto;
+        background: #f3f0ea;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    /* 🧾 Request info */
+    .info-box {
+        background: #fff;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* 🩸 Blood highlight */
+    .blood {
+        color: #e53935;
+        font-weight: bold;
+    }
+
+    /* 🧑‍🤝‍🧑 Donor list */
+    .donor-box {
+        background: #fff;
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    /* 🎴 Donor card */
+    .donor-card {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+        border: 1px solid transparent;
+    }
+
+        .donor-card:hover {
+            background: #ffeaea;
+            border-color: #e53935;
+        }
+
+        /* 🎯 Radio spacing */
+        .donor-card input {
+            margin-top: 6px;
+        }
+
+    /* 🔘 Actions */
+    .actions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .actions .btn {
+            border-radius: 12px;
+            padding: 8px 20px;
+        }
+</style>
