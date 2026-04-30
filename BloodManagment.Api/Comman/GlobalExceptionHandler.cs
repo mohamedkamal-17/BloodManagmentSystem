@@ -50,6 +50,17 @@ namespace BloodManagment.Api.Comman
                     Status = (int)HttpStatusCode.InternalServerError,
                     Detail = dbEx.Message
                 },
+                // ✅ 👇 YOUR NEW CASE
+                BadRequestException badReqEx => new ProblemDetails
+                {
+                    Title = "Bad Request",
+                    Status = (int)HttpStatusCode.BadRequest, // usually 400
+                    Detail = badReqEx.Message,
+                    Extensions =
+            {
+                ["errors"] = badReqEx.Errors
+            }
+                },
 
                 NotFoundException notFoundEx => new ProblemDetails
                 {

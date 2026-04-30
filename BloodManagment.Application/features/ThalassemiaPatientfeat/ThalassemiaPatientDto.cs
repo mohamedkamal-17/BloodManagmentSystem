@@ -15,6 +15,6 @@ namespace BloodManagment.Application.features.ThalassemiaPatientfeat
         public int HospitalId { get; set; }   // ✅ useful for future operations
         public string? HospitalName { get; set; }
 
-        // public string? FullName { get; set; } = null!;
+         public string? FullName { get; set; } = null!;
     }
 }

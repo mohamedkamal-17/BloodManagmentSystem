@@ -1,0 +1,238 @@
+﻿@using BloodManagment.Mvc.ViewModels.AnemiaBloodRequest
+@using BloodManagment.domain.Entities
+
+@model AnemiaBloodRequestVm
+
+@{
+    ViewData["Title"] = "تفاصيل الطلب";
+    Layout = "_DashboardLayout";
+}
+
+<style>
+    /* 🌌 Overlay */
+    .overlay-wrap {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(1200px 600px at 20% -10%, #ffe5e5 0%, transparent 60%), radial-gradient(1200px 600px at 120% 110%, #e3f2fd 0%, transparent 60%);
+        padding: 20px;
+    }
+
+    /* 🪟 Glass Card */
+    .overlay-card {
+        width: 100%;
+        max-width: 820px;
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        padding: 28px 28px 22px;
+        border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    /* 🧭 Header */
+    .overlay-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+
+    .title {
+        font-weight: 700;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .chip {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+        .chip.Pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .chip.Approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .chip.Accepted {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .chip.Rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .chip.Cancelled {
+            background: #343a40;
+            color: #fff;
+        }
+
+    /* 🧱 Grid */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .field {
+        background: #f7f6f3;
+        border-radius: 16px;
+        padding: 14px 16px;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .label {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 4px;
+    }
+
+    .value {
+        font-size: 15px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    /* 🩸 Highlights */
+    .blood {
+        color: #e53935;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    .hb.low {
+        background: #ffe5e5;
+        color: #b71c1c;
+        padding: 3px 10px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    /* 🎯 Footer */
+    .footer {
+        margin-top: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn {
+        border-radius: 12px;
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+    /* 📱 Responsive */
+  
+</style>
+
+<div class="overlay-wrap" dir="rtl">
+    <div class="overlay-card">
+
+        <!-- 🧭 Header -->
+        <div class="overlay-header">
+            <div class="title">📄 تفاصيل طلب الدم</div>
+
+            <span class="chip @Model.Status">
+                @Model.Status
+            </span>
+        </div>
+
+        <!-- 🧱 Grid -->
+        <div class="grid">
+
+            <div class="field">
+                <div class="label">الكود</div>
+                <div class="value">@Model.RequestCode</div>
+            </div>
+
+            <div class="field">
+                <div class="label">الفصيلة</div>
+                <div class="value blood">@Model.BloodGroup</div>
+            </div>
+
+            <div class="field">
+                <div class="label">الجهة المسؤولة</div>
+                <div class="value">@Model.ResponsibleEntity</div>
+            </div>
+
+            <div class="field">
+                <div class="label">جهة إصدار التحليل</div>
+                <div class="value">@Model.BloodTestIssuer</div>
+            </div>
+
+            <div class="field">
+                <div class="label">تاريخ الطلب</div>
+                <div class="value">@Model.RequestDate.ToString("yyyy-MM-dd")</div>
+            </div>
+
+            <div class="field">
+                <div class="label">تاريخ الحضور</div>
+                <div class="value">@Model.AttendanceDate.ToString("yyyy-MM-dd")</div>
+            </div>
+
+            <div class="field">
+                <div class="label">تاريخ صورة الدم</div>
+                <div class="value">@Model.BloodTestDate.ToString("yyyy-MM-dd")</div>
+            </div>
+
+            <div class="field">
+                <div class="label">آخر نقل دم</div>
+                <div class="value">@Model.LastTransfusionDate.ToString("yyyy-MM-dd")</div>
+            </div>
+
+            <div class="field">
+                <div class="label">نسبة الهيموجلوبين</div>
+                <div class="value">
+                    <span class="hb @(Model.HemoglobinLevel < 8 ? "low" : "")">
+                        @Model.HemoglobinLevel
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 🎯 Footer -->
+        <div class="footer">
+            <a asp-action="Index" class="btn btn-secondary">
+                ⬅ رجوع
+            </a>
+
+            @if (Model.Status == RequestStatus.Pending)
+            {
+                <div class="d-flex gap-2">
+                    <form asp-action="Approve" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button class="btn btn-success">
+                            ✔ قبول
+                        </button>
+                    </form>
+
+                    <form asp-action="Reject" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button class="btn btn-danger">
+                            ✖ رفض
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

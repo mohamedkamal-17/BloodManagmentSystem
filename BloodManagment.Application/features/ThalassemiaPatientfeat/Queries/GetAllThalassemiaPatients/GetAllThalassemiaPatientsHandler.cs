@@ -32,7 +32,7 @@ namespace BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.Get
                 HospitalId = p.HospitalId,
                 HospitalName = p.Hospital != null ? p.Hospital.Name : "—",
 
-                //  FullName = p.FullName
+                 FullName = p.User.FullName
             }).ToList();
         }
     }

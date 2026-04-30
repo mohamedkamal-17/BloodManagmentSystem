@@ -3,6 +3,7 @@ using BloodManagment.Application.features.Auth.Commandes.ResetPasswordWithOtp;
 using BloodManagment.domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace BloodManagment.Application.features.Auth.Commandes.VerifyOtp
@@ -29,19 +30,20 @@ namespace BloodManagment.Application.features.Auth.Commandes.VerifyOtp
             // 🔎 Find user
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
-                throw new ApplicationException("Invalid request");
+                  return false; 
 
             var cacheKey = $"otp_{user.Id}";
 
             // 📦 Get OTP from cache
             if (!_memoryCache.TryGetValue(cacheKey, out OtpCacheModel otpData))
-                throw new ApplicationException("OTP expired or not found");
+                return false;
+
 
             // ⏱️ Expiration check
             if (otpData.ExpireAt < DateTime.UtcNow)
             {
                 _memoryCache.Remove(cacheKey);
-                throw new ApplicationException("OTP expired");
+                return false;
             }
 
             // 🔐 Verify OTP
@@ -52,13 +54,15 @@ namespace BloodManagment.Application.features.Auth.Commandes.VerifyOtp
                 if (otpData.Attempts >= 5)
                 {
                     _memoryCache.Remove(cacheKey);
-                    throw new ApplicationException("Too many attempts");
+                    return false;
+
                 }
 
                 // 🔁 update cache with incremented attempts
                 _memoryCache.Set(cacheKey, otpData, TimeSpan.FromMinutes(5));
 
-                throw new ApplicationException("Invalid OTP");
+                return false;
+
             }
 
             // ✅ Success → remove OTP
@@ -66,5 +70,18 @@ namespace BloodManagment.Application.features.Auth.Commandes.VerifyOtp
 
             return true;
         }
+    }
+}
+public class OtpException : Exception
+{
+    public int StatusCode { get; }
+
+    public object Payload { get; }
+
+    public OtpException(object payload, int statusCode)
+        : base("OTP error")
+    {
+        Payload = payload;
+        StatusCode = statusCode;
     }
 }

@@ -1,11 +1,16 @@
 ﻿@using BloodManagment.Mvc.ViewModels.AnemiaBloodRequest
+
+@using BloodManagment.domain.Entities
 @model List<AnemiaBloodRequestVm>
+
 @{
     ViewData["Title"] = "طلبات مرضى الانميا";
     Layout = "_DashboardLayout";
 }
-<div class="table-card">
-    <table class="table text-center align-middle">
+
+<div class="table-card" dir="rtl">
+
+    <table class="table table-hover text-center align-middle">
         <thead>
             <tr>
                 <th>ID</th>
@@ -15,42 +20,88 @@
                 <th>الفصيلة</th>
                 <th>الهيموجلوبين</th>
                 <th>تاريخ الحضور</th>
-                <th></th>
+                <th>الإجراءات</th>
             </tr>
         </thead>
 
         <tbody>
             @foreach (var item in Model)
             {
+                var statusClass = item.Status.ToString().Replace(" ", "");
+
                 <tr>
-                    <td>@item.Id</td>
+                    <td>
+                        <a asp-action="Details"
+                           asp-route-id="@item.Id"
+                           class="fw-bold text-decoration-none">
+                            @item.RequestCode
+                        </a>
+                    </td>
                     <td>@item.RequestCode</td>
                     <td>@item.ResponsibleEntity</td>
 
+                    <!-- 🟡 Status -->
                     <td>
-                        <span class="status-badge @(item.Status.ToString())">
+                        <span class="status-badge @statusClass">
                             @item.Status
                         </span>
                     </td>
 
-                    <td>@item.BloodGroup</td>
+                    <td class="blood">@item.BloodGroup</td>
 
+                    <!-- 🧪 Hemoglobin -->
                     <td>
-                        <span class="@(item.HemoglobinLevel < 8 ? "text-danger fw-bold" : "")">
+                        <span class="@(item.HemoglobinLevel < 8 ? "low-hb" : "")">
                             @item.HemoglobinLevel
                         </span>
                     </td>
 
                     <td>@item.AttendanceDate.ToString("yyyy-MM-dd")</td>
 
-                    <td class="actions">
-                        <button class="btn btn-sm btn-outline-danger">🗑</button>
-                        <a asp-controller="AnemiaBloodRequest"
-                           asp-action="Assign"
-                           asp-route-requestId="@item.Id"
-                           class="btn btn-sm btn-outline-primary">
-                            تعيين
-                        </a>
+                    <!-- ⚙️ ACTIONS -->
+                    <td>
+                        <div class="actions">
+
+                            @if (item.Status == RequestStatus.Pending)
+                            {
+                                <!-- ✔ Accept -->
+                                <form asp-action="Approve" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fa-solid fa-check"></i>
+                                        قبول
+                                    </button>
+                                </form>
+
+                                <!-- ✖ Reject -->
+                                <form asp-action="Reject" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-xmark"></i>
+                                        رفض
+                                    </button>
+                                </form>
+                            }
+
+                            else if (item.Status == RequestStatus.Approved)
+                            {
+                                <!-- ➕ Assign -->
+                                <a asp-action="Assign"
+                                   asp-route-requestId="@item.Id"
+                                   class="btn btn-primary btn-sm">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    تعيين
+                                </a>
+                            }
+
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+
+                        </div>
                     </td>
                 </tr>
             }
@@ -59,168 +110,19 @@
 </div>
 
 <style>
-    /* 🌍 Page */
-    .anemia-page {
-        direction: rtl;
-        font-family: 'Cairo', sans-serif;
-    }
-
-    /* 📦 Table Container */
+    /* 📦 Container */
     .table-card {
-        background: linear-gradient(145deg, #f3f0ea, #ffffff);
+        background: #f3f0ea;
         border-radius: 20px;
         padding: 25px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     }
 
     /* 📋 Table */
-    .table {
-        margin-bottom: 0;
-    }
-
-        .table thead th {
-            font-size: 13px;
-            color: #888;
-            font-weight: 600;
-            border-bottom: 2px solid #eee;
-            padding: 15px 10px;
-        }
-
-        /* 🧾 Rows */
-        .table tbody tr {
-            transition: all 0.25s ease;
-            border-radius: 12px;
-        }
-
-            .table tbody tr:hover {
-                background: #fff5f5;
-                transform: scale(1.01);
-                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            }
-
-        /* 📌 Cells */
-        .table td {
-            font-size: 14px;
-            padding: 14px 10px;
-            vertical-align: middle;
-        }
-
-    /* 🟡 Status Badge */
-    .status-badge {
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-    }
-
-        .status-badge.Pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-badge.Completed {
-            background: #d4edda;
-            color: #155724;
-        }
-
-    /* 🩸 Blood Group */
-    td:nth-child(5) {
-        font-weight: bold;
-        color: #e53935;
-    }
-
-    /* 🧪 Hemoglobin */
-    .text-danger.fw-bold {
-        background: #ffe5e5;
-        padding: 4px 10px;
-        border-radius: 10px;
-    }
-
-    /* ⚙️ Actions */
-    .actions {
-        display: flex;
-        justify-content: center;
-        gap: 6px;
-    }
-
-        /* 🔘 Buttons */
-        .actions .btn {
-            border-radius: 10px;
-            padding: 4px 10px;
-            transition: 0.2s;
-        }
-
-        /* 🗑 Delete */
-        .actions .btn-outline-danger:hover {
-            background: #e53935;
-            color: #fff;
-            transform: scale(1.1);
-        }
-
-        /* ➕ Assign */
-        .actions .btn-outline-primary:hover {
-            background: #1976d2;
-            color: #fff;
-            transform: scale(1.1);
-        }
-
-    /* ✨ Smooth */
-    * {
-        transition: all 0.2s ease-in-out;
-    }</style>
-@* <style>
-    .anemia-page {
-        direction: rtl;
-        font-family: 'Cairo', sans-serif;
-    }
-
-    /* 🔴 Cards */
-    .stat-card {
-        background: #f3f0ea;
-        border-radius: 16px;
-        padding: 20px;
-        text-align: center;
-        transition: 0.3s;
-    }
-
-        .stat-card h6 {
-            color: #888;
-            font-size: 14px;
-        }
-
-        .stat-card h3 {
-            font-size: 26px;
-            font-weight: bold;
-            color: #222;
-        }
-
-    /* 🔍 Controls */
-    .add-btn {
-        background: #e53935;
-        border-radius: 12px;
-        padding: 10px 20px;
-    }
-
-    .filter-btn {
-        border-radius: 12px;
-    }
-
-    .search-box {
-        border-radius: 12px;
-        width: 250px;
-    }
-
-    /* 📋 Table */
-    .table-card {
-        background: #f3f0ea;
-        border-radius: 20px;
-        padding: 20px;
-    }
-
     .table th {
-        font-size: 14px;
+        font-size: 13px;
         color: #777;
+        font-weight: 600;
     }
 
     .table td {
@@ -229,30 +131,75 @@
 
     /* 🟡 Status */
     .status-badge {
-        padding: 5px 12px;
-        border-radius: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
         font-size: 12px;
+        font-weight: bold;
     }
 
+        /* 🎨 Status Colors */
         .status-badge.Pending {
             background: #fff3cd;
             color: #856404;
         }
 
-        .status-badge.Completed {
+        .status-badge.Approved {
             background: #d4edda;
             color: #155724;
         }
 
-    /* 🔵 Type */
-    .type-badge {
+        .status-badge.Accepted {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-badge.Rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-badge.Cancelled {
+            background: #343a40;
+            color: white;
+        }
+
+    /* 🩸 Blood */
+    .blood {
+        font-weight: bold;
         color: #e53935;
+    }
+
+    /* 🧪 Hemoglobin */
+    .low-hb {
+        background: #ffe5e5;
+        padding: 4px 8px;
+        border-radius: 8px;
+        color: red;
         font-weight: bold;
     }
 
     /* ⚙️ Actions */
-    .actions button {
-        border-radius: 10px;
-        margin: 0 2px;
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
     }
-</style> *@
+
+    /* 🔘 Buttons */
+    .btn {
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: 13px;
+    }
+
+    /* 📱 Responsive Fix */
+   @*  @media (max-width: 768px) {
+        .actions
+
+    {
+        flex-direction: column;
+    }
+
+    } *@
+</style>

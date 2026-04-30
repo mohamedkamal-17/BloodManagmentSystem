@@ -36,7 +36,7 @@ namespace BloodManagment.Application.features.Donarfeat.Queries.PredictDonor
 
             var monetary = donor.DonationCount * 250; // cc
 
-            var time = donor.DonationCount * 3; // estimation
+            var time = donor.DonationCount; /** 3*/// estimation
 
             var apiRequest = new DonationPredictionRequestDto
             {

@@ -23,14 +23,14 @@ namespace BloodManagment.Infrastructure.Repositorise
         public async Task<AnemiaBloodRequest?> GetByIdAsync(int id)
         {
             return await _dbSet
-                .AsNoTracking()
+               
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<AnemiaBloodRequest?> GetByIdWithDetailsAsync(int id)
         {
             return await _dbSet
                 .Include(x => x.Patient)
-                .AsNoTracking()
+               
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<IList<AnemiaBloodRequest>> GetAllAsync()

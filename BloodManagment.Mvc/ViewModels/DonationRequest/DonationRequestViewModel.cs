@@ -11,7 +11,7 @@ namespace BloodManagment.Mvc.ViewModels.DonationRequest
 
         public DateTime PreferredDonationDate { get; set; }
 
-        public RequestStatus Statu { get; set; }
+        public RequestStatus Status { get; set; }
 
         public int HealthConditionId { get; set; }
 

@@ -25,10 +25,17 @@ namespace BloodManagment.Application.features.Auth.Commandes.ApiLogin
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null ||
-                !await _userManager.CheckPasswordAsync(user, request.Password))
-                throw new UnauthorizedAccessException();
+              !await _userManager.CheckPasswordAsync(user, request.Password))
+            {
+                return null;
+            }
+
+
+
+
 
             return await _tokenService.CreateToken(user);
+
         }
     }
 }

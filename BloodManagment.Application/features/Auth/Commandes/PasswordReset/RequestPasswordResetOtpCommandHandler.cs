@@ -9,7 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 namespace BloodManagment.Application.features.Auth.Commandes.PasswordReset
 {
     public class RequestPasswordResetOtpCommandHandler
-     : IRequestHandler<RequestPasswordResetOtpCommand>
+     : IRequestHandler<RequestPasswordResetOtpCommand,bool>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IOtpService _otpService;
@@ -31,12 +31,12 @@ namespace BloodManagment.Application.features.Auth.Commandes.PasswordReset
             this.memoryCache = memoryCache;
         }
 
-        public async Task Handle(
+        public async Task<bool> Handle(
             RequestPasswordResetOtpCommand request,
             CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null) return; // 🔐 security
+            if (user == null) return false; // 🔐 security
 
             var otp = _otpService.GenerateOtp();
 
@@ -61,6 +61,7 @@ namespace BloodManagment.Application.features.Auth.Commandes.PasswordReset
                     "Reset Password OTP",
                     $"Your OTP is: {otp}"
                 );
+            return true;
         }
     }
 

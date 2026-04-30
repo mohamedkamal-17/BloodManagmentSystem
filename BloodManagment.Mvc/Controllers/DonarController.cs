@@ -76,7 +76,7 @@ namespace BloodManagment.Mvc.Controllers
                 DonorId = id
             });
 
-            return View("PredictionResult", result);
+            return View("Predict", result);
         }
     }
 }

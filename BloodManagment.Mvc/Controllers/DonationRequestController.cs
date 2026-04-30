@@ -1,4 +1,6 @@
-﻿using BloodManagment.Application.features.DonationRequestfeat.Queries.GetDonationRequestById;
+﻿using BloodManagment.Application.features.DonationRequestfeat.Commandes.AcceptDonationRequest;
+using BloodManagment.Application.features.DonationRequestfeat.Commandes.RejectDonationRequestCommand;
+using BloodManagment.Application.features.DonationRequestfeat.Queries.GetDonationRequestById;
 using BloodManagment.Application.features.DonationRequestfeat.Queries.GettAllDonationRequests;
 using BloodManagment.Mvc.ViewModels.DonationRequest;
 using MediatR;
@@ -28,7 +30,7 @@ namespace BloodManagment.Mvc.Controllers
                     RequestCode = x.RequestCode,
                     RequestDate = x.RequestDate,
                     PreferredDonationDate = x.PreferredDonationDate,
-                    Statu = x.Statu,
+                    Status = x.Statu,
                     DonarId = x.DonarId,
                     DonarName = x.DonarName,
                     HealthConditionId = x.HealthConditionId
@@ -74,24 +76,26 @@ namespace BloodManagment.Mvc.Controllers
             return View(vm);
         }
 
-        //public async Task<IActionResult> Accept(string code)
-        //{
-        //    await mediator.Send(new AcceptDonationRequestCommand
-        //    {
-        //        RequestCode = code
-        //    });
+        [HttpGet]
+        public async Task<IActionResult> Accept(int id)
+        {
+            var result = await mediator.Send(new AcceptDonationRequestCommand { Id=id});
 
-        //    return RedirectToAction("Index");
-        //}
+            if (!result)
+                return NotFound();
 
-        //public async Task<IActionResult> Reject(string code)
-        //{
-        //    await mediator.Send(new RejectDonationRequestCommand
-        //    {
-        //        RequestCode = code
-        //    });
+            return RedirectToAction("Index");
+        }
 
-        //    return RedirectToAction("Index");
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Reject(int id)
+        {
+            var result = await mediator.Send(new RejectDonationRequestCommand { Id = id });
+
+            if (!result)
+                return NotFound();
+
+            return RedirectToAction("Index");
+        }
     }
 }

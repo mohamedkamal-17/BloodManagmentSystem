@@ -1,5 +1,8 @@
-﻿using BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.AssignDonorToThalassemiaPatient;
+﻿using BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.ApproveAnemiaRequest;
+using BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.AssignDonorToThalassemiaPatient;
+using BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.RejectAnemiaRequest;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAllAnemiaBloodRequests;
+using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestById;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAssignScreenData;
 using BloodManagment.Mvc.ViewModels.AnemiaBloodRequest;
 using MediatR;
@@ -71,6 +74,45 @@ namespace BloodManagment.Mvc.Controllers
         {
             ViewBag.RequestId = requestId;
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Approve(int id)
+        {
+            await _mediator.Send(new ApproveAnemiaRequestCommand { Id = id });
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Reject(int id)
+        {
+            await _mediator.Send(new RejectAnemiaRequestCommand { Id = id });
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var result = await _mediator.Send(new GetAnemiaBloodRequestByIdQuery(id));
+
+            if (result == null)
+                return NotFound();
+            AnemiaBloodRequestVm vm = new AnemiaBloodRequestVm
+            {
+                Id = result.Id,
+                RequestCode = result.RequestCode,
+                RequestDate = result.RequestDate,
+                BloodGroup = result.BloodGroup,
+                Status = result.Status,
+                ResponsibleEntity = result.ResponsibleEntity,
+                AttendanceDate = result.AttendanceDate,
+                BloodTestDate = result.BloodTestDate,
+                LastTransfusionDate = result.LastTransfusionDate,
+                HemoglobinLevel = result.HemoglobinLevel,
+                BloodTestIssuer = result.BloodTestIssuer,
+                PatientId = result.PatientId
+            };
+
+            return View(vm);
         }
     }
 }

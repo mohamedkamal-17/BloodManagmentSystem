@@ -7,11 +7,127 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
+<style>
+    /* 🌍 Page */
+    body {
+        direction: rtl;
+        font-family: 'Cairo', sans-serif;
+        background: #f8f9fa;
+    }
+
+    /* 📦 Card */
+    .card {
+        border-radius: 18px;
+        overflow: hidden;
+        border: none;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    /* 📋 Table */
+    .table {
+        margin-bottom: 0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+        .table thead th {
+            font-size: 13px;
+            color: #777;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+            padding: 15px 10px;
+        }
+
+        /* 🧾 Rows */
+        .table tbody tr {
+            transition: all 0.25s ease;
+        }
+
+            .table tbody tr:hover {
+                background: #fff5f5;
+                transform: scale(1.01);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            }
+
+        /* 📌 Cells */
+        .table td {
+            font-size: 14px;
+            padding: 14px 10px;
+            vertical-align: middle;
+        }
+
+            /* 🔗 Code link */
+            .table td a {
+                color: #e53935;
+                font-weight: bold;
+            }
+
+    /* 🟡 Status badges */
+    .badge {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-warning {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .badge-success {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .badge-danger {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    /* ⚙️ Actions */
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+    }
+
+        .actions .btn {
+            border-radius: 10px;
+            padding: 4px 10px;
+            transition: 0.2s;
+            font-size: 13px;
+        }
+
+            .actions .btn:hover {
+                transform: scale(1.08);
+            }
+
+    .btn-success:hover {
+        background: #28a745;
+        color: #fff;
+    }
+
+    .btn-danger:hover {
+        background: #e53935;
+        color: #fff;
+    }
+
+    /* ✨ Smooth UI */
+    * {
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+
 <h3 class="mb-4 text-end">طلبات التبرع</h3>
 
 <div class="card shadow-sm">
     <div class="card-body">
 
+       
         <table class="table table-bordered table-hover text-end bg-white">
 
             <thead class="table-light">
@@ -31,50 +147,53 @@
                 {
                     <tr>
 
+                        <!-- 🔗 Code -->
                         <td>
                             <a asp-action="Details"
-                               asp-route-id="@item.Id"
-                               class="fw-bold text-decoration-none">
-                                @item.RequestCode
+                               asp-route-id="@item.Id">
+                                @item.Id
                             </a>
                         </td>
 
+                        <!-- 👤 Donor -->
                         <td>@item.DonarName</td>
 
+                        <!-- 📅 Dates -->
                         <td>@item.RequestDate.ToString("yyyy/MM/dd")</td>
-
                         <td>@item.PreferredDonationDate.ToString("yyyy/MM/dd")</td>
 
+                        <!-- 🟡 Status -->
                         <td>
-
-                            @if (item.Statu == RequestStatus.Pending)
+                            @if (item.Status == RequestStatus.Pending)
                             {
-                                <span class="badge bg-warning text-dark">قيد المراجعة</span>
+                                <span class="badge badge-warning">قيد المراجعة</span>
                             }
-                            else if (item.Statu == RequestStatus.Accepted)
+                            else if (item.Status == RequestStatus.Accepted)
                             {
-                                <span class="badge bg-success">مقبول</span>
+                                <span class="badge badge-success">مقبول</span>
                             }
-                            else
+                            else if (item.Status == RequestStatus.Rejected)
                             {
-                                <span class="badge bg-danger">مرفوض</span>
+                                <span class="badge badge-danger">مرفوض</span>
                             }
-
                         </td>
 
-                        <td>
+                        <!-- ⚙️ Actions -->
+                        <td class="actions">
 
-                            @if (item.Statu == RequestStatus.Pending)
+                            @if (item.Status == RequestStatus.Pending)
                             {
                                 <a asp-action="Accept"
-                                   asp-route-code="@item.RequestCode"
+                                   asp-route-id="@item.Id"
                                    class="btn btn-success btn-sm">
+                                    <i class="fa-solid fa-check"></i>
                                     قبول
                                 </a>
 
                                 <a asp-action="Reject"
-                                   asp-route-code="@item.RequestCode"
+                                   asp-route-id="@item.Id"
                                    class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-xmark"></i>
                                     رفض
                                 </a>
                             }
@@ -89,7 +208,10 @@
                 }
 
             </tbody>
+
         </table>
 
     </div>
+    ```
+
 </div>

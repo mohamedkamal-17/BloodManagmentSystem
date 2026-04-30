@@ -41,6 +41,7 @@ namespace BloodManagment.Api.Contrrollers
         public async Task<IActionResult> Login(ApiLoginCommand command)
         {
             var token = await _mediator.Send(command);
+            if (token is null) return BadRequest(new { message = "email or Paswword not coreect" });
 
             return Ok(new { access_token = token });
         }
@@ -49,12 +50,18 @@ namespace BloodManagment.Api.Contrrollers
         [AllowAnonymous]
         public async Task<IActionResult> RequestOtp(RequestPasswordResetOtpCommand requestPasswordResetOtpCommand)
         {
-            await _mediator.Send(
+           var result= await _mediator.Send(
                requestPasswordResetOtpCommand);
-
-            return Ok(new
+            if (result)
             {
-                message = "If the account exists, an OTP was sent."
+                return Ok(new
+                {
+                    message = "If the account exists, an OTP was sent."
+                });
+            }else return BadRequest(new
+            {
+                success = false,
+                message = "invalid email!"
             });
         }
 
@@ -72,11 +79,22 @@ namespace BloodManagment.Api.Contrrollers
 
             var result = await _mediator.Send(verifyOtpCommand);
 
-            return Ok(new
+            if (result)
             {
-                success = true,
-                message = "OTP verified successfully"
-            });
+                return Ok(new
+                {
+                    success = true,
+                    message = "OTP verified successfully"
+                });
+            }
+            else
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid OTP"
+                });
+            }
 
 
 
