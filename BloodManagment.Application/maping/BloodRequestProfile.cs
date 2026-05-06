@@ -15,7 +15,7 @@ namespace BloodManagment.Application.maping
                           opt => opt.MapFrom(src => src.Hospital.Name)
                           ).ForMember(dest => dest.PatientName,
                           opt => opt.MapFrom(src => src.Rescipient.FullName));
-            CreateMap<CreatBloodRequestCommand, BloodRequest>();
+            //CreateMap<CreatBloodRequestCommand, BloodRequest>();
 
         }
     }

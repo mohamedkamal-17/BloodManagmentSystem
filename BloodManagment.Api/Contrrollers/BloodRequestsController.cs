@@ -1,7 +1,9 @@
 ﻿using BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBloodRequest;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetAllBloodRequests;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestesByBloodStatus;
-using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByUserId;
+using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestsByUserIdQuery;
+using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByRecipientId;
+using BloodManagment.Application.features.BloodRequestfeat.Queries.GetCreateBloodRequestData;
 using BloodManagment.domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +28,16 @@ public class BloodRequestsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var requestCode = await _mediator.Send(command, cancellationToken);
-
-        return CreatedAtAction(
-            nameof(GetAll),
-            new { requestCode },
-            new { requestCode });
+        if 
+            (requestCode == null)
+            return BadRequest(new
+            {
+                message = "Invalid HospitalId or UserId."
+            });
+        return Ok(new
+        {
+            RequestCode = requestCode
+        });
     }
 
     // ==============================
@@ -43,6 +50,28 @@ public class BloodRequestsController : ControllerBase
         var result = await _mediator.Send(
             new GetAllBloodRequestsQuery(),
             cancellationToken);
+
+        return Ok(result);
+    }
+    [HttpGet("create-data")]
+    public async Task<IActionResult> GetCreateData()
+    {
+        var result = await _mediator.Send(new GetCreateBloodRequestDataQuery());
+
+        return Ok(result);
+    }
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> GetBloodRequestsByUserId(string userId)
+    {
+        var result = await _mediator.Send(new GetBloodRequestsByUserIdQuery
+        {
+            UserId = userId
+        });
+
+        if (result == null || result.Count == 0)
+        {
+            return NotFound(new { Message = "No blood requests found for this user." });
+        }
 
         return Ok(result);
     }
@@ -73,12 +102,17 @@ public class BloodRequestsController : ControllerBase
         [FromRoute] int userId,
         CancellationToken cancellationToken)
     {
-        var query = new GetByUserIdQuery
+        var query = new GetByRecipientIdQuery
         {
             UserId = userId
         };
 
         var result = await _mediator.Send(query, cancellationToken);
+        if (result == null)
+            return NotFound(new
+            {
+                message=$"No blood requests found for user with ID {userId}."
+            });
 
         return Ok(result);
     }

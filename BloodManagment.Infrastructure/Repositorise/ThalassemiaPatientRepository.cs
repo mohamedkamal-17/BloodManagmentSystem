@@ -50,11 +50,11 @@ namespace BloodManagment.Infrastructure.Repositorise
 
 
 
-        public async Task<IList<ThalassemiaPatient>>
+        public async Task<ThalassemiaPatient>
             GetByUserIdAsync(string userID)
         {
             return await ApplaySpacedication(
-                    new GetThalassemiaPatientsByUserIdSpec(userID)).ToListAsync();
+                    new GetThalassemiaPatientsByUserIdSpec(userID)).FirstOrDefaultAsync();
         }
     }
 }

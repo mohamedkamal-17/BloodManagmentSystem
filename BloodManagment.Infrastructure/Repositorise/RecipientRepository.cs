@@ -28,14 +28,20 @@ namespace BloodManagment.Infrastructure.Repositorise
             throw new NotImplementedException();
         }
 
-        public Task<Rescipient> GetByIdAsync(int id)
+          public async Task<Rescipient?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await DbSet.Include(r => r.User)
+
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public Task<IList<Rescipient>> GetByUserIdAsync(string userID)
+        public async Task<Rescipient?> GetByUserIdAsync(string userID)
         {
-            throw new NotImplementedException();
+            return await DbSet.Include(r => r.User)
+
+                 .FirstOrDefaultAsync(r => r.UserId == userID);
         }
+
+       
     }
 }

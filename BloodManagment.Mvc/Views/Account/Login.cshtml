@@ -14,88 +14,104 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-
-        body{
-            font-family:'Cairo', sans-serif;
-            height:100vh;
-            margin:0;
+        body {
+            font-family: 'Cairo', sans-serif;
+            height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
         }
 
-        .login-container{
-            height:100vh;
+        .login-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .left-side{
-            background:#f2f2f2;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+        .left-side {
+            background: #f0f4f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .login-box{
-            width:400px;
+        .login-box {
+            width: 350px;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .logo{
-            width:60px;
-            margin-bottom:25px;
+        .logo {
+            width: 60px;
+            margin-bottom: 30px;
         }
 
-        .login-title{
-            font-weight:700;
-            font-size:32px;
+        .login-title {
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #333;
         }
 
-        .login-sub{
-            color:#666;
-            margin-bottom:30px;
+        .login-sub {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
         }
 
-        .form-control{
-            border-radius:30px;
-            padding:14px 20px;
-            border:1px solid #dc3545;
+        .form-control {
+            border-radius: 30px;
+            padding: 14px 20px;
+            border: 1px solid #dc3545;
+            font-size: 16px;
         }
 
-        .form-control:focus{
-            box-shadow:none;
-            border-color:#dc3545;
+            .form-control:focus {
+                box-shadow: none;
+                border-color: #dc3545;
+            }
+
+        .btn-login {
+            background: linear-gradient(145deg, #dc3545, #ff6f61);
+            border: none;
+            border-radius: 30px;
+            padding: 14px;
+            font-weight: 600;
+            color: #fff;
+            width: 100%;
+            transition: background-color 0.3s ease;
         }
 
-        .btn-login{
-            background:#dc3545;
-            border:none;
-            border-radius:30px;
-            padding:14px;
-            font-weight:600;
-            color:#fff;
+            .btn-login:hover {
+                background: linear-gradient(145deg, #ff6f61, #dc3545);
+            }
+
+        .right-side {
+            background: url('/images/signin.jpg') no-repeat center center;
+            background-size: cover;
+            border-top-left-radius: 40px;
+            border-bottom-left-radius: 40px;
+            display: none; /* Hide on mobile view */
         }
 
-        .btn-login:hover{
-            background:#bb2d3b;
+        .validation-summary-errors {
+            color: red;
+            font-size: 14px;
+            margin-top: 15px;
         }
 
-        .right-side{
-            background:url('/images/signin.jpg') no-repeat center center;
-            background-size:cover;
-            border-top-left-radius:40px;
-            border-bottom-left-radius:40px;
-        }
-
-        .validation-summary-errors{
-            color:red;
-            font-size:14px;
-            margin-top:15px;
-        }
-
+        /* Responsive design */
+      
     </style>
 </head>
+
 <body>
 
     <div class="container-fluid login-container">
-        <div class="row h-100">
-
-            <!-- IMAGE SIDE -->
+        <div class="row w-100 h-100">
+            <!-- IMAGE SIDE (hidden on mobile) -->
             <div class="col-md-6 d-none d-md-block right-side"></div>
 
             <!-- FORM SIDE -->
@@ -105,7 +121,7 @@
                     <!-- Replace with your logo if needed -->
                     <img src="/images/logo.png" class="logo" alt="logo" />
 
-                    <div class="login-title mb-2">تسجيل الدخول</div>
+                    <div class="login-title mb-3">تسجيل الدخول</div>
                     <div class="login-sub">أنقذ حياة.. ادير طلبات الدم بسهولة</div>
 
                     <form asp-action="Login" method="post">
@@ -129,7 +145,7 @@
                             </label>
                         </div>
 
-                        <button type="submit" class="btn btn-login w-100">
+                        <button type="submit" class="btn btn-login">
                             تسجيل الدخول
                         </button>
 

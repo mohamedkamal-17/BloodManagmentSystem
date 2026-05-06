@@ -28,13 +28,13 @@ namespace BloodManagment.Application.features.Donarfeat.Commandes.CreateDonorPro
             CancellationToken cancellationToken)
         {
             // 1️⃣ Ensure user is Donor
-            var user = await _userManager.FindByIdAsync(_currentUser.UserId);
+            var user = await _userManager.FindByIdAsync(request.UserId);
 
             if (user?.UserType != UserType.Donor)
                 throw new ApplicationException("Only donors can create donor profiles");
 
             // 2️⃣ Ensure donor profile does not exist
-            var existingDonor = await unitOfWorke.DonarRepository.GetByUserIdAsync(_currentUser.UserId);
+            var existingDonor = await unitOfWorke.DonarRepository.GetByUserIdAsync(request.UserId);
 
             if (existingDonor != null)
                 throw new ApplicationException("Donor profile already exists");
@@ -42,13 +42,14 @@ namespace BloodManagment.Application.features.Donarfeat.Commandes.CreateDonorPro
             // 3️⃣ Create donor
             var donor = new Donar
             {
-                FullName = request.FullName,
+                FullName = user.FullName,
                 BloodGroup = request.BloodGroup,
                 Gender = request.Gender,
                 DonarCode = $"DN-{Guid.NewGuid().ToString()[..6]}",
-                UserId = _currentUser.UserId,
+               
                 DonationCount = 0,
-                IsEilgibleToDonate = IsEligibleToDonate(request.LastDonationDate, request.Gender)
+                IsEilgibleToDonate = IsEligibleToDonate(request.LastDonationDate, request.Gender),
+                User= user
 
             };
 

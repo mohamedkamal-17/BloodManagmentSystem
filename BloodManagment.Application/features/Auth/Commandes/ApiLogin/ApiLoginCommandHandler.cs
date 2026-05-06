@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BloodManagment.Application.features.Auth.Commandes.ApiLogin
 {
-    public class ApiLoginCommandHandler : IRequestHandler<ApiLoginCommand, string>
+    public class ApiLoginCommandHandler : IRequestHandler<ApiLoginCommand, LoginRespons>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IIdentityService _tokenService;
@@ -18,7 +18,7 @@ namespace BloodManagment.Application.features.Auth.Commandes.ApiLogin
             _tokenService = tokenService;
         }
 
-        public async Task<string> Handle(
+        public async Task<LoginRespons> Handle(
             ApiLoginCommand request,
             CancellationToken cancellationToken)
         {
@@ -31,10 +31,17 @@ namespace BloodManagment.Application.features.Auth.Commandes.ApiLogin
             }
 
 
+            var respons = new LoginRespons
+            {
+                UserId = user.Id,
+                UserType=user.UserType
+            };
+            return respons;
 
 
 
-            return await _tokenService.CreateToken(user);
+
+
 
         }
     }

@@ -5,6 +5,7 @@ using BloodManagment.domain.Entities;
 using BloodManagment.Infrastructure.Comman;
 using BloodManagment.Infrastructure.DataHelper;
 using BloodManagment.Infrastructure.Repositorise;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,8 +30,9 @@ namespace BloodManagment.Infrastructure.Extension
 
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = AuthSchemes.Cookie;
-                options.DefaultChallengeScheme = AuthSchemes.Cookie;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
             .AddCookie(AuthSchemes.Cookie, options =>
             {

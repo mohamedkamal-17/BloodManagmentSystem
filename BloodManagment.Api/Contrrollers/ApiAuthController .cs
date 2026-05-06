@@ -4,6 +4,7 @@ using BloodManagment.Application.features.Auth.Commandes.PasswordReset;
 using BloodManagment.Application.features.Auth.Commandes.ResetPasswordWithOtp;
 using BloodManagment.Application.features.Auth.Commandes.VerifyOtp;
 using MediatR;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,10 +41,13 @@ namespace BloodManagment.Api.Contrrollers
         [AllowAnonymous]
         public async Task<IActionResult> Login(ApiLoginCommand command)
         {
-            var token = await _mediator.Send(command);
-            if (token is null) return BadRequest(new { message = "email or Paswword not coreect" });
+            var respons = await _mediator.Send(command);
+            if (respons is null) return BadRequest(new { message = "email or Paswword not coreect" });
 
-            return Ok(new { access_token = token });
+            return Ok(new {
+                UserId = respons.UserId,
+                UserType = respons.UserType
+            });
         }
 
         [HttpPost("forgot-password-otp")]

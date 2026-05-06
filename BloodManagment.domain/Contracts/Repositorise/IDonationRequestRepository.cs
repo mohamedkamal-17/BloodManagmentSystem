@@ -9,9 +9,14 @@ namespace BloodManagment.domain.Contracts.Repositorise
         Task<DonationRequest?> GetPendingDonationRequestByDonor(int donerId);
         Task<IList<DonationRequest>> GetAllAsync();
 
-        Task<IList<DonationRequest>> GetByUserIdAsync(int userID);
+        Task<IList<DonationRequest>> GetByDonarIdAsync(int userID);
 
         Task<IList<DonationRequest>> GetByStatusAsync(RequestStatus status);
 
+        Task<int> GetDonarRequestnumberByDonerId(int donorId);
+
+        
+            Task<List<DonationRequest>> GetByUserIdAsync(string userId);
+       
     }
 }

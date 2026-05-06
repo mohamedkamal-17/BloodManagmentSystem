@@ -1,12 +1,12 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
-using BloodManagment.Application.features.ThalassemiaPatientfeat.Commandes.CreateThalassemiaPatientProfile;
+﻿using BloodManagment.Application.features.ThalassemiaPatientfeat.Commandes.CreateThalassemiaPatientProfile;
+using BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.CheckThalassemiaPatientExistByUserId;
 using BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.GetAllThalassemiaPatients;
 using BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.GetThalassemiaPatientByIdQuery;
 using BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.GetThalassemiaPatientByUserId;
 using BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.GetThalassemiaPatientsByBloodGroup;
 using BloodManagment.domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BloodManagment.Api.Controllers;
 
@@ -87,5 +87,22 @@ public class ThalassemiaPatientsController : ControllerBase
             new GetThalassemiaPatientsByBloodGroupQuery(bloodGroup));
 
         return Ok(result);
+    }
+    [HttpGet("exists/{userId}")]
+    public async Task<IActionResult> CheckThalassemiaPatientExist(string userId)
+    {
+        var result = await _mediator.Send(new CheckThalassemiaPatientExistByUserIdQuery
+        {
+            UserId = userId
+        });
+
+        if (result)
+        {
+            return Ok(new { Message = "Thalassemia Patient exists." });
+        }
+        else
+        {
+            return NotFound(new { Message = "Thalassemia Patient not found." });
+        }
     }
 }

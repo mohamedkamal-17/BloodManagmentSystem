@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BloodManagment.Mvc.Controllers
 {
 
-    [Authorize(AuthenticationSchemes = AuthSchemes.Cookie)]
+  //  [Authorize(AuthenticationSchemes = AuthSchemes.Cookie)]
     public class AccountController : Controller
     {
         private readonly IMediator _mediator;
@@ -35,7 +35,7 @@ namespace BloodManagment.Mvc.Controllers
             var result = await _mediator.Send(command);
 
             if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
 
             ModelState.AddModelError("", "البريد الإلكتروني أو كلمة المرور غير صحيحة");
             return View(command);

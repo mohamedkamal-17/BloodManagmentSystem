@@ -31,6 +31,7 @@ namespace BloodManagment.Infrastructure.Comman
                     new Claim("UserId", user.Id),
                     new Claim("UserName", user.UserName),
                     new Claim("Email", user.Email),
+                     new Claim("UserType",user.UserType.ToString()),
                     new Claim(ClaimTypes.Role, user.UserType.ToString())
 
                 }),

@@ -1,11 +1,14 @@
-﻿
-using MediatR;
-using System.Collections.ObjectModel;
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByUserId
 {
-    public class GetAnemiaBloodRequestByUserIdQuery : IRequest<ReadOnlyCollection<GetAnemiaBloodRequestByUserIdDto>>
+    public class GetAnemiaBloodRequestByUserIdQuery : IRequest<List<GetAnemiaBloodRequestByUserIdDto>>
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

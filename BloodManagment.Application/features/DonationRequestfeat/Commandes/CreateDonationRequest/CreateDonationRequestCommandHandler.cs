@@ -5,7 +5,7 @@ using MediatR;
 namespace BloodManagment.Application.features.DonationRequestfeat.Commandes.CreateDonationRequest
 {
     public class CreateDonationRequestCommandHandler
-    : IRequestHandler<CreateDonationRequestCommand, int>
+    : IRequestHandler<CreateDonationRequestCommand, string>
     {
         private readonly IUnitOfWork unitOfWorke;
 
@@ -20,36 +20,36 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Commandes.Crea
             _currentUser = currentUser;
         }
 
-        public async Task<int> Handle(
+        public async Task<string> Handle(
             CreateDonationRequestCommand request,
             CancellationToken cancellationToken)
         {
             // 1️⃣ Get donor by logged-in user
-            var donor = await unitOfWorke.DonarRepository.GetByUserIdAsync(_currentUser.UserId);
+            var donor = await unitOfWorke.DonarRepository.GetByUserIdAsync(request.UserId);
 
             if (donor == null)
-                throw new ApplicationException("Donor profile not found");
+                return null;
 
             // 2️⃣ Eligibility checks
-            if (!donor.IsEilgibleToDonate)
-                throw new ApplicationException("Donor is not eligible");
+            //if (!donor.IsEilgibleToDonate)
+            //    throw new ApplicationException("Donor is not eligible");
 
-            if (donor.NextDonationDate.HasValue &&
-                donor.NextDonationDate.Value > DateTime.UtcNow)
-                throw new ApplicationException("Donation not allowed yet");
+            //if (donor.NextDonationDate.HasValue &&
+            //    donor.NextDonationDate.Value > DateTime.UtcNow)
+            //    throw new ApplicationException("Donation not allowed yet");
 
-            // 3️⃣ Prevent duplicate pending request
-            var existingRequest = await unitOfWorke.DonationRequestRepository.GetPendingDonationRequestByDonor(donor.Id);
+            //// 3️⃣ Prevent duplicate pending request
+            //var existingRequest = await unitOfWorke.DonationRequestRepository.GetPendingDonationRequestByDonor(donor.Id);
 
 
-            if (existingRequest != null)
-                throw new ApplicationException("Pending donation request already exists");
+            //if (existingRequest != null)
+            //    throw new ApplicationException("Pending donation request already exists");
 
-            // 4️⃣ Health condition validation
-            if (request.HealthCondition.HasAIDS ||
-                request.HealthCondition.HasCancer ||
-                request.HealthCondition.HasHeartDisease)
-                throw new ApplicationException("Health condition not suitable for donation");
+            //// 4️⃣ Health condition validation
+            //if (request.HealthCondition.HasAIDS ||
+            //    request.HealthCondition.HasCancer ||
+            //    request.HealthCondition.HasHeartDisease)
+            //    throw new ApplicationException("Health condition not suitable for donation");
 
             // 5️⃣ Create HealthCondition
             var healthCondition = new HealthCondition
@@ -83,7 +83,7 @@ namespace BloodManagment.Application.features.DonationRequestfeat.Commandes.Crea
             await unitOfWorke.DonationRequestRepository.AddAsync(donationRequest);
             await unitOfWorke.SaveChangesAsync();
 
-            return donationRequest.Id;
+            return donationRequest.DonarId.ToString();
         }
     }
 

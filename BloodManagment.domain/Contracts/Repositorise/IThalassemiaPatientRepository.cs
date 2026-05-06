@@ -9,6 +9,6 @@ namespace BloodManagment.domain.Contracts.Repositorise
         Task<ThalassemiaPatient> GetByIdAsync(int id);
         Task<IList<ThalassemiaPatient>> GetAllAsync();
         Task<IList<ThalassemiaPatient>> GetByBloodGroupAsync(BloodGroup bloodGroup);
-        Task<IList<ThalassemiaPatient>> GetByUserIdAsync(string userID);
+        Task<ThalassemiaPatient> GetByUserIdAsync(string userID);
     }
 }

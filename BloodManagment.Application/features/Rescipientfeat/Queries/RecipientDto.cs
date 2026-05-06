@@ -9,5 +9,9 @@ namespace BloodManagment.Application.features.Rescipientfeat.Queries
         public string FullName { get; set; } = null!;
         public Gender Gender { get; set; }
         public int BloodRequestsCount { get; set; }
+        public  string UserId { get; set; }
+
+        public int BloodrequestesCount { get; set; }
+
     }
 }

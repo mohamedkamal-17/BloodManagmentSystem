@@ -5,7 +5,7 @@ using MediatR;
 
 namespace BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBloodRequest
 {
-    internal class CreateBloodRequestCommandHandler : IRequestHandler<CreatBloodRequestCommand, int>
+    internal class CreateBloodRequestCommandHandler : IRequestHandler<CreatBloodRequestCommand, string>
     {
 
 
@@ -19,23 +19,42 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBl
             this.mapper = mapper;
         }
 
-
-
-        async Task<int> IRequestHandler<CreatBloodRequestCommand, int>.Handle(CreatBloodRequestCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreatBloodRequestCommand request, CancellationToken cancellationToken)
         {
-
             var hospital = await unitOfWorke.HospitalRepository.GetByIdAsync(request.HospitalId);
 
             if (hospital == null)
-                throw new Exception("Hospital not found");
+                return null;
+
+
+            var patient = await unitOfWorke.RecipientRepository.GetByUserIdAsync(request.UserId);
+            if (patient == null) return null;
 
             // 2️⃣ Validate Recipient (if exists)
 
             // 3️⃣ Generate Request Code (Senior Approach)
             var requestCode = $"BR-{DateTime.UtcNow:yyyyMMddHHmmssfff}";
+            request.RescipientId = patient.Id;
 
-            var brequest = mapper.Map<CreatBloodRequestCommand, BloodRequest>(request);
-            brequest.RequestCode = requestCode;
+            var brequest = new BloodRequest
+            {
+                RequestCode = requestCode,
+                HospitalId = request.HospitalId,
+                RescipientId = patient.Id,
+                BloodGroup = request.BloodGroup,
+
+                IsEmergency = request.IsEmergency,
+
+                RequestDate = DateTime.UtcNow,
+                Status = RequestStatus.Pending,
+                Reason = request.Reason,
+
+
+
+            };
+
+
+
             // 4️⃣ Create Entity
 
 
@@ -45,7 +64,10 @@ namespace BloodManagment.Application.features.BloodRequestfeat.Commandes.CreatBl
             // 6️⃣ Commit Transaction
 
 
-            return await unitOfWorke.SaveChangesAsync();
+            await unitOfWorke.SaveChangesAsync();
+
+            return brequest.Id.ToString();
         }
-    }
+
+        }
 }

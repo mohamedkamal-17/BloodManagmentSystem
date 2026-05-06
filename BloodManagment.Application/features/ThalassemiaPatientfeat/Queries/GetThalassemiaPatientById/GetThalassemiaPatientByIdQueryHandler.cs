@@ -24,9 +24,10 @@ namespace BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.Get
             var patient = await unitOfWork
                 .ThalassemiaPatientRepository
                 .GetByIdAsync(request.Id);
+           int numberOfRequestes =  unitOfWork.AnemiaBloodRequestRepository.GetCountByPationIdAsync(request.Id).Result;
 
             if (patient == null)
-                throw new NotFoundException("Thalassemia Patient not found");
+                return null;
 
             // Mapping (manual mapping example)
             return new ThalassemiaPatientDto
@@ -36,7 +37,10 @@ namespace BloodManagment.Application.features.ThalassemiaPatientfeat.Queries.Get
                 LastTransfusionDate = patient.LastTransfusionDate,
                 NextTransfusionDate = patient.NextTransfusionDate,
                 HospitalName = patient.Hospital?.Name ?? "",
-                //FullName = patient.User?.FullName ?? ""
+                FullName = patient.User?.FullName ?? "",
+                NumberOfRequestes   
+                    = numberOfRequestes,
+
             };
         }
     }

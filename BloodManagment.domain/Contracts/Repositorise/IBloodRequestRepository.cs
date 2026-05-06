@@ -12,9 +12,12 @@ namespace BloodManagment.domain.Contracts.Repositorise
         Task<BloodRequest?> GetByHospitalsync(int hospitalId);
         Task<BloodRequest?> GetByIdAsync(int hospitalId);
 
-        Task<IList<BloodRequest>> GetByUserIdAsync(int userID);
+        Task<IList<BloodRequest>> GetByRecipientIdAsync(int userID);
 
         Task<IList<BloodRequest>> GetByBloodGroupAsync(BloodGroup bloodGroup);
+
+        Task<int> GetCountByRecipiantIDAsync(int recipiantId);
+        Task<List<BloodRequest>> GetByUserIdAsync(string userId);
 
 
 

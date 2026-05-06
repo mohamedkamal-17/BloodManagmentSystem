@@ -16,6 +16,7 @@ namespace BloodManagment.Application.features.Donarfeat.Queries.GetByUserId
         }
         public async Task<DonarDto> Handle(GetByUserIdQuery request, CancellationToken cancellationToken)
         {
+
             var doner = await unitOfWorke.DonarRepository.GetByUserIdAsync(request.UserId);
             return mapper.Map<DonarDto>(doner);
 

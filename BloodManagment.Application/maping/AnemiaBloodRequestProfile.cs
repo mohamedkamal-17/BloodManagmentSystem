@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAllAnemiaBloodRequests;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByStatu;
-using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByUserId;
+using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByPatientId;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestsByBloodGroup;
 using BloodManagment.domain.Entities;
 
@@ -14,7 +14,7 @@ namespace BloodManagment.Application.maping
             CreateMap<AnemiaBloodRequest, GetAllAnemiaBloodRequestDto>();
             CreateMap<AnemiaBloodRequest, GetAnemiaBloodRequestByStatuDto>();
             CreateMap<AnemiaBloodRequest, GetAnemiaBloodRequestByBloodGroupDto>();
-            CreateMap<AnemiaBloodRequest, GetAnemiaBloodRequestByUserIdDto>();
+            CreateMap<AnemiaBloodRequest, GetAnemiaBloodRequestByPatientIdDto>();
         }
     }
 }

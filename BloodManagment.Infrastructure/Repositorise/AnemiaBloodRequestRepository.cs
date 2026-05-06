@@ -1,11 +1,12 @@
-﻿using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByStatu;
-using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByUserId;
+﻿using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByPatientId;
+using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByStatu;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestsByBloodGroup;
 using BloodManagment.domain.Contracts.Repositorise;
 using BloodManagment.domain.Entities;
 using BloodManagment.Infrastructure.DataHelper;
 using BloodManagment.Infrastructure.Repositoris;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace BloodManagment.Infrastructure.Repositorise
 {
@@ -49,9 +50,20 @@ namespace BloodManagment.Infrastructure.Repositorise
             return await ApplaySpacedication(new GetAnemiaBloodRequestByStatuSpc(status)).ToListAsync();
         }
 
-        public async Task<IList<AnemiaBloodRequest>> GetByUserIdAsync(int userID)
+        public async Task<IList<AnemiaBloodRequest>> GetByPatientIdAsync(int userID)
         {
-            return await ApplaySpacedication(new GetAnemiaBloodRequestByUserIdSpc(userID)).ToListAsync();
+            return await ApplaySpacedication(new GetAnemiaBloodRequestByPatientIdSpc(userID)).ToListAsync();
+        }
+        public async Task<List<AnemiaBloodRequest>> GetByUserIdAsync(string userId)
+        {
+            return await _dbSet
+                .Include(abr => abr.Patient)  // Assuming Patient has a UserId property
+                .Where(abr => abr.Patient.UserId == userId)  // Filter by Patient's UserId
+                .ToListAsync();
+        }
+        public async Task<int> GetCountByPationIdAsync(int pationId)
+        {
+            return await _dbset.CountAsync(r => r.PatientId == pationId);
         }
     }
 

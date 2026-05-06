@@ -22,11 +22,11 @@ namespace BloodManagment.Infrastructure.Repositorise
                 .ToListAsync();
         }
 
-        public async Task<Donar?> GetByIdAsync(int userId)
+        public async Task<Donar?> GetByIdAsync(int Id)
         {
             return await _donars
 
-                .FirstOrDefaultAsync(x => x.Id == userId);
+                .FirstOrDefaultAsync(x => x.Id == Id);
         }
 
         public async Task<Donar?> GetByUserIdAsync(string userId)

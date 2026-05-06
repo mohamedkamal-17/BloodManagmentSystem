@@ -19,11 +19,12 @@ namespace BloodManagment.Application.features.Auth.Commandes.MvcLogin
             MvcLoginCommand request,
             CancellationToken cancellationToken)
         {
-            return await _signInManager.PasswordSignInAsync(
+            var result =await _signInManager.PasswordSignInAsync(
                 request.Email,
                 request.Password,
                 request.RememberMe,
-                lockoutOnFailure: true);
+                lockoutOnFailure: false);
+            return result;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.NewFolder;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAllAnemiaBloodRequests;
+using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByPatientId;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByStatu;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestByUserId;
 using BloodManagment.Application.features.AnemiaBloodRequestfeat.Queries.GetAnemiaBloodRequestsByBloodGroup;
@@ -31,11 +32,15 @@ namespace BloodManagment.Api.Contrrollers
             CancellationToken cancellationToken)
         {
             var id = await _mediator.Send(command, cancellationToken);
-
-            return CreatedAtAction(
-                nameof(GetAll),
-                new { id },
-                new { id });
+            if (id == null) return BadRequest(
+                new
+                {
+                    message = "pation id not found"
+                });
+            return Ok(new
+            {
+                id = id
+            });
         }
 
         // =====================================================
@@ -82,11 +87,16 @@ namespace BloodManagment.Api.Contrrollers
             CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(
-                new GetAnemiaBloodRequestByUserIdQuery
+                new GetAnemiaBloodRequestByPatientIdQuery
                 {
                     UserId = userId
                 },
                 cancellationToken);
+            if (result == null)
+                return NotFound(new
+                {
+                    message=$"No anemia blood requests found for user with ID {userId}."
+                });
 
             return Ok(result);
         }
@@ -106,6 +116,27 @@ namespace BloodManagment.Api.Contrrollers
                     BloodGroup = bloodGroup
                 },
                 cancellationToken);
+            if (result == null )
+                return NotFound(new
+            {
+                message = $"No anemia blood requests found ."
+            });
+
+            return Ok(result);
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetAnemiaBloodRequestsByUserId(string userId)
+        {
+            var result = await _mediator.Send(new GetAnemiaBloodRequestByUserIdQuery
+            {
+                UserId = userId
+            });
+
+            if (result == null || result.Count == 0)
+            {
+                return NotFound(new { Message = "No anemia blood requests found for this user." });
+            }
 
             return Ok(result);
         }

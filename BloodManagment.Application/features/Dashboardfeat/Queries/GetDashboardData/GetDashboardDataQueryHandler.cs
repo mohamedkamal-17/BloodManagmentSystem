@@ -53,19 +53,19 @@ namespace BloodManagment.Application.features.Dashboardfeat.Queries.GetDashboard
                     DonationCount = x.DonationCount
                 }).ToList();
 
-            //var urgentRequests = await unitOfWork.BloodRequestRepository.GetByStatusAsync(RequestStatus.);
-            //dto.UrgentRequests = await _context.BloodRequests
-            //    .Where(x => x.Status == RequestStatus.Pending)
-            //    .OrderByDescending(x => x.CreatedAt)
-            //    .Take(5)
-            //    .Select(x => new UrgentRequestDto
-            //    {
-            //        PatientName = x.PatientName,
-            //        Hospital = x.Hospital.Name,
-            //        BloodType = x.BloodType.ToString(),
-            //        Quantity = x.Quantity,
-            //        Status = x.Status.ToString()
-            //    }).ToListAsync();
+            var urgentRequests = await unitOfWork.BloodRequestRepository.GetAllAsync();
+            dto.UrgentRequests = urgentRequests
+                .Where(x => x.Status == RequestStatus.Pending&& x.IsEmergency)
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(5)
+                .Select(x => new UrgentRequestDto
+                {
+                    PatientName = x.Rescipient.FullName,
+                    Hospital = x.Hospital.Name,
+                    BloodType = x.BloodGroup.ToString(),
+                    //Quantity = x.Quantity,
+                    Status = x.Status.ToString()
+                }).ToList();
 
             return dto;
         }

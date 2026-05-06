@@ -8,6 +8,8 @@ namespace BloodManagment.domain.Contracts.Repositorise
         Task<Rescipient> GetByIdAsync(int id);
         Task<IList<Rescipient>> GetAllAsync();
         Task<IList<Rescipient>> GetByBloodGroupAsync(BloodGroup bloodGroup);
-        Task<IList<Rescipient>> GetByUserIdAsync(string userID);
+        Task<Rescipient?> GetByUserIdAsync(string userID);
+        
+
     }
 }

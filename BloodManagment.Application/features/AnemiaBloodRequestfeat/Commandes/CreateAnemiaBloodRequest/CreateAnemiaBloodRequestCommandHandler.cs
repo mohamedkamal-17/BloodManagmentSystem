@@ -1,30 +1,53 @@
 ﻿using BloodManagment.Application.Commane;
+using BloodManagment.Application.features.ThalassemiaPatientfeat.Commandes.CreateThalassemiaPatientProfile;
 using BloodManagment.domain.Entities;
 using MediatR;
 
 namespace BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.NewFolder
 {
     public class CreateAnemiaBloodRequestCommandHandler
-        : IRequestHandler<CreateAnemiaBloodRequestCommand, int>
+        : IRequestHandler<CreateAnemiaBloodRequestCommand, string>
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMediator mediator;
 
-        public CreateAnemiaBloodRequestCommandHandler(IUnitOfWork unitOfWork)
+        public CreateAnemiaBloodRequestCommandHandler(IUnitOfWork unitOfWork ,IMediator mediator)
         {
 
-            this.unitOfWork = unitOfWork;
+          
+             this.unitOfWork = unitOfWork;
+            this.mediator = mediator;
         }
 
-        public async Task<int> Handle(
+        public async Task<string> Handle(
             CreateAnemiaBloodRequestCommand request,
             CancellationToken cancellationToken)
         {
             // 1️⃣ Validate Patient Exists
             var patient = await unitOfWork.ThalassemiaPatientRepository
-                .GetByIdAsync(request.PatientId);
+                .GetByUserIdAsync(request.UserId);
 
             if (patient == null)
-                throw new NotFoundException("Patient not found");
+            {
+                await mediator.Send(new CreateThalassemiaPatientProfileCommand
+                {
+                    BloodGroup = request.BloodGroup,
+                    DiagnosisDate = request.DiagnosisDate,
+                    HospitalId = request.HospitalId,
+                    LastTransfusionDate = request.LastTransfusionDate,
+                   UserId = request.UserId
+
+
+
+                });
+
+
+
+
+            }
+            patient = await unitOfWork.ThalassemiaPatientRepository
+                .GetByUserIdAsync(request.UserId);
+            if (patient is null) return null;
 
             // 2️⃣ Business Rule Validation (Important 🔥)
 
@@ -46,8 +69,8 @@ namespace BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.N
                 LastTransfusionDate = request.LastTransfusionDate,
                 HemoglobinLevel = request.HemoglobinLevel,
                 BloodTestIssuer = request.BloodTestIssuer,
+                Patient= patient
 
-                PatientId = request.PatientId
             };
 
             // 5️⃣ Add to Repository
@@ -56,7 +79,7 @@ namespace BloodManagment.Application.features.AnemiaBloodRequestfeat.Commandes.N
             // 6️⃣ Save Changes
             await unitOfWork.SaveChangesAsync();
 
-            return anemiaRequest.Id;
+            return anemiaRequest.Id.ToString();
         }
     }
 }

@@ -2,13 +2,14 @@
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestDetails;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetBloodRequestesByBloodStatu;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByBloodGroup;
-using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByUserId;
+using BloodManagment.Application.features.BloodRequestfeat.Queries.GetByRecipientId;
 using BloodManagment.Application.features.BloodRequestfeat.Queries.GetUrgentRequests;
 using BloodManagment.domain.Contracts.Repositorise;
 using BloodManagment.domain.Entities;
 using BloodManagment.Infrastructure.DataHelper;
 using BloodManagment.Infrastructure.Repositoris;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace BloodManagment.Infrastructure.Repositorise
 {
@@ -22,7 +23,15 @@ namespace BloodManagment.Infrastructure.Repositorise
         }
 
 
-
+        public async Task<List<BloodRequest>> GetByUserIdAsync(string userId)
+        {
+            return await _dbSet
+                .Include(br => br.Rescipient)  // Include Rescipient entity
+                .Include(br=>br.Hospital)
+                .Where(br => br.Rescipient.UserId == userId)  // Filter by Rescipient's UserId
+                .ToListAsync();
+        }
+    
         public async Task<IList<BloodRequest>> GetAllAsync()
         {
             return await ApplaySpacedication(new GetAllBloodRequestsQuerySpec()).ToListAsync();
@@ -48,9 +57,9 @@ namespace BloodManagment.Infrastructure.Repositorise
             return await ApplaySpacedication(new GetBloodRequestesByStatuSpc(status)).ToListAsync();
         }
 
-        public async Task<IList<BloodRequest>> GetByUserIdAsync(int userID)
+        public async Task<IList<BloodRequest>> GetByRecipientIdAsync(int userID)
         {
-            return await ApplaySpacedication(new GetByUserIdSpec(userID)).ToListAsync();
+            return await ApplaySpacedication(new GetByRecipientIdSpec(userID)).ToListAsync();
         }
 
         public async Task<int> GetCountAsync()
@@ -58,10 +67,16 @@ namespace BloodManagment.Infrastructure.Repositorise
             return await _dbset.CountAsync();
         }
 
+        public async Task<int> GetCountByRecipiantIDAsync(int recipiantId)
+        {
+            return await _dbset.CountAsync(r => r.RescipientId == recipiantId);
+        }
+
         public async Task<List<BloodRequest>> GetUrgentRequests()
         {
             return await ApplaySpacedication(new GetUrgentBloodRequestsSpec()).ToListAsync();
         }
+
     }
 
 
